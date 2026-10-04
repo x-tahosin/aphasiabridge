@@ -203,11 +203,6 @@ export default function SplineScene({ isSpeaking, urgency }) {
         const container = splineContainerRef.current;
         if (!canvas || !container) return;
 
-        // Set dimensions explicitly before initializing WebGL
-        const rect = container.getBoundingClientRect();
-        canvas.width = rect.width || 800;
-        canvas.height = rect.height || 380;
-
         const { Application } = await import('@splinetool/runtime');
         if (isDisposed) return;
 
