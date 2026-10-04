@@ -173,25 +173,23 @@ export default function SplineScene({ isSpeaking, urgency }) {
         <div style={{
           width: '100%',
           height: '100%',
-          borderRadius: '50%',
-          overflow: 'hidden',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          maskImage: 'radial-gradient(circle at 50% 50%, black 55%, transparent 75%)',
-          WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 55%, transparent 75%)'
+          maskImage: 'radial-gradient(ellipse at 50% 50%, black 60%, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at 50% 50%, black 60%, transparent 80%)'
         }}>
           <img
-            src="/images/cybernetic_robot.jpg"
-            alt="Tinker Cybernetic Neural Voice Avatar"
+            src="/images/cute_robot.jpg"
+            alt="Tariq Friendly Companion Robot"
             style={{
               width: '100%',
               height: '100%',
               objectFit: 'contain',
               mixBlendMode: 'screen',
               filter: isSpeaking 
-                ? 'drop-shadow(0 0 35px rgba(0, 245, 155, 0.6)) contrast(1.15) brightness(1.1)' 
-                : 'drop-shadow(0 0 20px rgba(0, 245, 155, 0.35)) contrast(1.1)',
+                ? 'drop-shadow(0 0 35px rgba(0, 245, 155, 0.7)) contrast(1.15) brightness(1.15)' 
+                : 'drop-shadow(0 0 22px rgba(0, 245, 155, 0.35)) contrast(1.1)',
               transition: 'filter 0.3s ease'
             }}
           />
