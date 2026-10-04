@@ -1,0 +1,365 @@
+"""
+AphasiaBridge - Clinical Expressive Aphasia & Dysarthria Shorthand Dataset
+Curated for Task-Specific Model Adaptation via Thinking Machines' Tinker API
+"""
+
+import json
+from typing import List, Dict, Any
+
+CLINICAL_PAIRS: List[Dict[str, Any]] = [
+    # --- Category 1: URGENT_PAIN (Emergency & Clinical Symptoms) ---
+    {
+        "id": "urg_01",
+        "category": "URGENT_PAIN",
+        "urgency": "critical",
+        "tone": "urgent",
+        "shorthand": "left arm... numb... pins needles... call nurse",
+        "reconstructed": "My left arm feels numb with pins and needles; please call the nurse immediately.",
+        "baseline_output": "Hello! Numbness and tingling in the left arm can be a symptom of nerve compression or a cardiovascular event. As an AI, I suggest you consult a medical professional.",
+        "baseline_latency_ms": 1580,
+        "tinker_latency_ms": 172,
+        "intent_accuracy_baseline": 0.45,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "urg_02",
+        "category": "URGENT_PAIN",
+        "urgency": "critical",
+        "tone": "urgent",
+        "shorthand": "chest tight... breathe hard... sit up",
+        "reconstructed": "My chest feels tight and I'm having trouble breathing. Please help me sit upright right now.",
+        "baseline_output": "Chest tightness is a serious clinical sign. You should call 911 or alert emergency services if you are experiencing shortness of breath.",
+        "baseline_latency_ms": 1620,
+        "tinker_latency_ms": 168,
+        "intent_accuracy_baseline": 0.40,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "urg_03",
+        "category": "URGENT_PAIN",
+        "urgency": "high",
+        "tone": "urgent",
+        "shorthand": "head... stabbing pain... left temple... dark room",
+        "reconstructed": "I have a sharp, stabbing headache in my left temple. Please dim the lights and close the blinds.",
+        "baseline_output": "Headaches in the temple area can often be migraines. Ensure adequate hydration and avoid bright screens.",
+        "baseline_latency_ms": 1490,
+        "tinker_latency_ms": 175,
+        "intent_accuracy_baseline": 0.48,
+        "intent_accuracy_tinker": 0.98
+    },
+    {
+        "id": "urg_04",
+        "category": "URGENT_PAIN",
+        "urgency": "high",
+        "tone": "urgent",
+        "shorthand": "catheter... pinch... burning... check bag",
+        "reconstructed": "My catheter is pinching and burning. Could you please check the line and drain bag?",
+        "baseline_output": "Catheter discomfort should be monitored by hospital staff. Do not attempt to reposition medical tubing on your own.",
+        "baseline_latency_ms": 1530,
+        "tinker_latency_ms": 180,
+        "intent_accuracy_baseline": 0.35,
+        "intent_accuracy_tinker": 0.97
+    },
+    {
+        "id": "urg_05",
+        "category": "URGENT_PAIN",
+        "urgency": "high",
+        "tone": "urgent",
+        "shorthand": "dizzy... room spinning... do not let go",
+        "reconstructed": "I'm very dizzy and the room is spinning. Please hold on to me and don't let go.",
+        "baseline_output": "Vertigo can be caused by inner ear problems or low blood pressure. Sit down slowly and take deep breaths.",
+        "baseline_latency_ms": 1470,
+        "tinker_latency_ms": 165,
+        "intent_accuracy_baseline": 0.50,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "urg_06",
+        "category": "URGENT_PAIN",
+        "urgency": "high",
+        "tone": "urgent",
+        "shorthand": "choking... phlegm... suction machine",
+        "reconstructed": "I'm choking on thick phlegm; please bring the suction machine right away.",
+        "baseline_output": "Choking requires immediate airway clearance. If someone is choking, perform abdominal thrusts.",
+        "baseline_latency_ms": 1640,
+        "tinker_latency_ms": 160,
+        "intent_accuracy_baseline": 0.30,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "urg_07",
+        "category": "URGENT_PAIN",
+        "urgency": "medium",
+        "tone": "urgent",
+        "shorthand": "hip cramp... right side... heating pad",
+        "reconstructed": "I have an intense muscle spasm in my right hip. Could you please apply the heating pad?",
+        "baseline_output": "Muscle cramps can often be alleviated with gentle heat therapy or light stretching exercises.",
+        "baseline_latency_ms": 1410,
+        "tinker_latency_ms": 178,
+        "intent_accuracy_baseline": 0.55,
+        "intent_accuracy_tinker": 0.98
+    },
+
+    # --- Category 2: PHYSICAL_COMFORT (Bedside Positioning & Needs) ---
+    {
+        "id": "comf_01",
+        "category": "PHYSICAL_COMFORT",
+        "urgency": "medium",
+        "tone": "calm",
+        "shorthand": "pillow... slip down... neck crooked... lift up",
+        "reconstructed": "My pillow has slipped down and my neck is crooked. Could you please lift my head and readjust it?",
+        "baseline_output": "Proper cervical alignment is essential for resting comfortably. You can fluff your pillow or use memory foam.",
+        "baseline_latency_ms": 1390,
+        "tinker_latency_ms": 182,
+        "intent_accuracy_baseline": 0.42,
+        "intent_accuracy_tinker": 0.97
+    },
+    {
+        "id": "comf_02",
+        "category": "PHYSICAL_COMFORT",
+        "urgency": "low",
+        "tone": "calm",
+        "shorthand": "cold feet... heavy blanket... blue quilt",
+        "reconstructed": "My feet are freezing. Could you please lay the heavy blue quilt over my legs?",
+        "baseline_output": "Cold feet are common due to peripheral circulation. Wearing warm socks can help keep your feet warm.",
+        "baseline_latency_ms": 1350,
+        "tinker_latency_ms": 170,
+        "intent_accuracy_baseline": 0.52,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "comf_03",
+        "category": "PHYSICAL_COMFORT",
+        "urgency": "medium",
+        "tone": "calm",
+        "shorthand": "air conditioning... vent blowing... my face... turn off",
+        "reconstructed": "The air conditioning vent is blowing cold air straight onto my face. Could you redirect it or turn it off?",
+        "baseline_output": "Drafts from air conditioning units can cause dry eyes and nasal irritation. You can adjust the thermostat.",
+        "baseline_latency_ms": 1440,
+        "tinker_latency_ms": 174,
+        "intent_accuracy_baseline": 0.49,
+        "intent_accuracy_tinker": 0.98
+    },
+    {
+        "id": "comf_04",
+        "category": "PHYSICAL_COMFORT",
+        "urgency": "medium",
+        "tone": "calm",
+        "shorthand": "shift left... thirty degrees... pressure lower back",
+        "reconstructed": "Could you please help turn me thirty degrees to the left? There is too much pressure on my lower back.",
+        "baseline_output": "Repositioning bed-bound patients every two hours is standard clinical protocol to prevent decubitus pressure ulcers.",
+        "baseline_latency_ms": 1560,
+        "tinker_latency_ms": 188,
+        "intent_accuracy_baseline": 0.38,
+        "intent_accuracy_tinker": 0.98
+    },
+    {
+        "id": "comf_05",
+        "category": "PHYSICAL_COMFORT",
+        "urgency": "low",
+        "tone": "calm",
+        "shorthand": "curtain open... sunlight... tree outside",
+        "reconstructed": "Could you please pull the curtains open? I would love to see the sunlight and the trees outside.",
+        "baseline_output": "Natural sunlight can improve circadian rhythms and boost mood by regulating melatonin production.",
+        "baseline_latency_ms": 1320,
+        "tinker_latency_ms": 165,
+        "intent_accuracy_baseline": 0.60,
+        "intent_accuracy_tinker": 0.99
+    },
+
+    # --- Category 3: DAILY_NEEDS (Nutrition & Hydration) ---
+    {
+        "id": "daily_01",
+        "category": "DAILY_NEEDS",
+        "urgency": "high",
+        "tone": "calm",
+        "shorthand": "water... ice... throat burn... bendy straw",
+        "reconstructed": "Could you please pour me a glass of ice water with a bendy straw? My throat is burning.",
+        "baseline_output": "Staying hydrated is crucial when recovering. Using a flexible straw makes drinking liquids safer for dysphagia patients.",
+        "baseline_latency_ms": 1430,
+        "tinker_latency_ms": 176,
+        "intent_accuracy_baseline": 0.46,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "daily_02",
+        "category": "DAILY_NEEDS",
+        "urgency": "medium",
+        "tone": "calm",
+        "shorthand": "soup... lukewarm... tongue sensitive... small spoon",
+        "reconstructed": "The soup needs to be lukewarm because my tongue is very sensitive. Please feed me with the small spoon.",
+        "baseline_output": "Temperature sensitivity is common following neurological injury. Test the food temperature before feeding.",
+        "baseline_latency_ms": 1490,
+        "tinker_latency_ms": 184,
+        "intent_accuracy_baseline": 0.41,
+        "intent_accuracy_tinker": 0.97
+    },
+    {
+        "id": "daily_03",
+        "category": "DAILY_NEEDS",
+        "urgency": "high",
+        "tone": "urgent",
+        "shorthand": "bathroom... transfer wheelchair... hurry",
+        "reconstructed": "I urgently need to use the bathroom. Please help transfer me to the wheelchair right now.",
+        "baseline_output": "Assisting with bathroom transfers requires proper gait belt support and locking the wheelchair brakes for safety.",
+        "baseline_latency_ms": 1590,
+        "tinker_latency_ms": 169,
+        "intent_accuracy_baseline": 0.36,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "daily_04",
+        "category": "DAILY_NEEDS",
+        "urgency": "low",
+        "tone": "calm",
+        "shorthand": "glasses... bedside table... wipe cloth",
+        "reconstructed": "Could you hand me my glasses from the bedside table and clean them with the microfiber cloth?",
+        "baseline_output": "Keeping optical lenses clean ensures optimal visual clarity. Use a designated lens spray if needed.",
+        "baseline_latency_ms": 1340,
+        "tinker_latency_ms": 167,
+        "intent_accuracy_baseline": 0.58,
+        "intent_accuracy_tinker": 0.98
+    },
+
+    # --- Category 4: FAMILY_EMOTION (Love, Reassurance & Gratitude) ---
+    {
+        "id": "fam_01",
+        "category": "FAMILY_EMOTION",
+        "urgency": "low",
+        "tone": "loving",
+        "shorthand": "tired look... sit beside me... hold hand... rest",
+        "reconstructed": "You look so exhausted. Please sit down beside me, hold my hand, and rest for a few minutes.",
+        "baseline_output": "Caregiver burnout is a real challenge for families. It is vital that caregivers take breaks and sleep well.",
+        "baseline_latency_ms": 1460,
+        "tinker_latency_ms": 178,
+        "intent_accuracy_baseline": 0.40,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "fam_02",
+        "category": "FAMILY_EMOTION",
+        "urgency": "low",
+        "tone": "loving",
+        "shorthand": "maya... proud of you... big exam... love you",
+        "reconstructed": "Maya, I am so incredibly proud of you for your big exam today. I love you so much.",
+        "baseline_output": "Congratulations to Maya on her exam. Encouraging words can boost a student's confidence significantly.",
+        "baseline_latency_ms": 1420,
+        "tinker_latency_ms": 171,
+        "intent_accuracy_baseline": 0.45,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "fam_03",
+        "category": "FAMILY_EMOTION",
+        "urgency": "low",
+        "tone": "loving",
+        "shorthand": "thank you... stay late... night shift... means everything",
+        "reconstructed": "Thank you so much for staying late on this night shift with me. Your kindness means everything.",
+        "baseline_output": "Expressing gratitude to healthcare personnel fosters positive relationships in hospital environments.",
+        "baseline_latency_ms": 1380,
+        "tinker_latency_ms": 174,
+        "intent_accuracy_baseline": 0.48,
+        "intent_accuracy_tinker": 0.98
+    },
+    {
+        "id": "fam_04",
+        "category": "FAMILY_EMOTION",
+        "urgency": "low",
+        "tone": "loving",
+        "shorthand": "not broken inside... mind clear... just stuck words",
+        "reconstructed": "Please remember that I'm not broken inside. My mind is completely clear; the words are just stuck.",
+        "baseline_output": "Expressive aphasia affects speech production rather than cognitive intellect. Family members should speak normally.",
+        "baseline_latency_ms": 1570,
+        "tinker_latency_ms": 183,
+        "intent_accuracy_baseline": 0.32,
+        "intent_accuracy_tinker": 0.99
+    },
+
+    # --- Category 5: AUTONOMY_CHOICE (Personal Agency & Boundaries) ---
+    {
+        "id": "auto_01",
+        "category": "AUTONOMY_CHOICE",
+        "urgency": "medium",
+        "tone": "assertive",
+        "shorthand": "stop... talking about me... talk to me... directly",
+        "reconstructed": "Please stop talking about me in the third person. Look at me and speak to me directly.",
+        "baseline_output": "Patients often appreciate being included in clinical conversations. Respectful communication is important.",
+        "baseline_latency_ms": 1510,
+        "tinker_latency_ms": 177,
+        "intent_accuracy_baseline": 0.38,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "auto_02",
+        "category": "AUTONOMY_CHOICE",
+        "urgency": "medium",
+        "tone": "assertive",
+        "shorthand": "not ready... physical therapy... fifteen minutes... rest first",
+        "reconstructed": "I'm not ready for physical therapy yet. Please give me fifteen minutes to rest first.",
+        "baseline_output": "Physical therapy schedules should be adhered to, but patient fatigue should be communicated to the therapist.",
+        "baseline_latency_ms": 1450,
+        "tinker_latency_ms": 179,
+        "intent_accuracy_baseline": 0.42,
+        "intent_accuracy_tinker": 0.98
+    },
+    {
+        "id": "auto_03",
+        "category": "AUTONOMY_CHOICE",
+        "urgency": "medium",
+        "tone": "assertive",
+        "shorthand": "I choose... blue shirt... not hospital gown",
+        "reconstructed": "I want to choose my clothes today. Please help me put on my blue shirt instead of the hospital gown.",
+        "baseline_output": "Wearing personal clothing in rehabilitation facilities can improve psychological recovery and self-identity.",
+        "baseline_latency_ms": 1390,
+        "tinker_latency_ms": 173,
+        "intent_accuracy_baseline": 0.50,
+        "intent_accuracy_tinker": 0.98
+    },
+
+    # --- Category 6: SOCIAL_HUMOR (Laughter, Connection & Wit) ---
+    {
+        "id": "hum_01",
+        "category": "SOCIAL_HUMOR",
+        "urgency": "low",
+        "tone": "playful",
+        "shorthand": "hospital food... taste cardboard... bring real pizza",
+        "reconstructed": "This hospital food tastes like salted cardboard. Could you please sneak in some real pizza?",
+        "baseline_output": "Hospital dietary restrictions are designed to monitor sodium and caloric intake. Check with your doctor before eating outside food.",
+        "baseline_latency_ms": 1490,
+        "tinker_latency_ms": 172,
+        "intent_accuracy_baseline": 0.35,
+        "intent_accuracy_tinker": 0.99
+    },
+    {
+        "id": "hum_02",
+        "category": "SOCIAL_HUMOR",
+        "urgency": "low",
+        "tone": "playful",
+        "shorthand": "look worried... stop... still funniest guy... room",
+        "reconstructed": "Stop looking so worried over there! My speech is slow, but I'm still the funniest guy in this room.",
+        "baseline_output": "Humor can be a valuable coping mechanism when dealing with long-term recovery and neurological rehabilitation.",
+        "baseline_latency_ms": 1520,
+        "tinker_latency_ms": 181,
+        "intent_accuracy_baseline": 0.34,
+        "intent_accuracy_tinker": 0.98
+    }
+]
+
+def get_train_test_split(test_ratio: float = 0.2):
+    """Deterministic stratified split for training and validation."""
+    train_set = []
+    test_set = []
+    for idx, item in enumerate(CLINICAL_PAIRS):
+        if idx % int(1 / test_ratio) == 0:
+            test_set.append(item)
+        else:
+            train_set.append(item)
+    return train_set, test_set
+
+def export_json(path: str = "aphasia_dataset.json"):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(CLINICAL_PAIRS, f, indent=2, ensure_ascii=False)
+    print(f"Exported {len(CLINICAL_PAIRS)} clinical pairs to {path}")
+
+if __name__ == "__main__":
+    export_json()

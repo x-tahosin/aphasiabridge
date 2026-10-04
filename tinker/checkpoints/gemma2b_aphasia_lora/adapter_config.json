@@ -1,0 +1,18 @@
+{
+  "adapter_type": "lora",
+  "base_model_name_or_path": "google/gemma-2b-it",
+  "r": 8,
+  "lora_alpha": 16,
+  "lora_dropout": 0.05,
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj"
+  ],
+  "total_trainable_params": 1843200,
+  "total_base_params": 2150000000,
+  "trainable_percent": 0.0857,
+  "timestamp": "2026-10-04T18:39:44Z",
+  "trained_with": "Thinking Machines Tinker API v1.2"
+}
