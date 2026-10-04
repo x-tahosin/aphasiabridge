@@ -111,30 +111,99 @@ export default function Home() {
       }}>
         {/* Brand */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          {/* Futuristic Cybernetic Voice Node Mark */}
           <div style={{
-            width: '34px',
-            height: '34px',
-            borderRadius: '9px',
-            background: 'linear-gradient(135deg, #00F59B 0%, #059669 100%)',
+            position: 'relative',
+            width: '38px',
+            height: '38px',
+            borderRadius: '11px',
+            background: 'linear-gradient(145deg, #111822 0%, #0A0F15 100%)',
+            border: '1px solid rgba(0, 245, 155, 0.35)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 20px var(--zed-glow)'
+            boxShadow: '0 0 20px rgba(0, 245, 155, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
+            flexShrink: 0
           }}>
-            <Activity size={18} color="#07090D" strokeWidth={2.8} />
+            {/* Cybernetic Equalizer Sound Wave */}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="8" width="2.5" height="8" rx="1.25" fill="#00F59B" />
+              <rect x="8.5" y="4" width="2.5" height="16" rx="1.25" fill="#00F59B" />
+              <rect x="14" y="9" width="2.5" height="10" rx="1.25" fill="#34D399" />
+              <rect x="19.5" y="6" width="2.5" height="12" rx="1.25" fill="#059669" />
+              <circle cx="12" cy="12" r="9" stroke="rgba(0, 245, 155, 0.25)" strokeWidth="1.2" strokeDasharray="3 3" />
+            </svg>
+            {/* Micro-glow in the center */}
+            <div style={{
+              position: 'absolute',
+              width: '14px',
+              height: '14px',
+              borderRadius: '50%',
+              background: '#00F59B',
+              filter: 'blur(8px)',
+              opacity: 0.45,
+              pointerEvents: 'none'
+            }} />
           </div>
 
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '15px', fontWeight: '900', fontFamily: 'var(--font-display)', letterSpacing: '-0.02em', color: '#FFFFFF' }}>
-                APHASIABRIDGE
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{
+                fontSize: '16px',
+                fontFamily: 'var(--font-display)',
+                letterSpacing: '-0.03em',
+                display: 'inline-flex',
+                alignItems: 'center'
+              }}>
+                <span style={{ fontWeight: '700', color: '#FFFFFF' }}>Aphasia</span>
+                <span style={{
+                  fontWeight: '900',
+                  background: 'linear-gradient(135deg, #00F59B 0%, #34D399 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>Bridge</span>
               </span>
-              <span className="pill-zed" style={{ padding: '2px 8px', fontSize: '10px' }}>
+
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                background: 'rgba(0, 245, 155, 0.08)',
+                border: '1px solid rgba(0, 245, 155, 0.28)',
+                borderRadius: '6px',
+                padding: '2px 7px',
+                fontSize: '9.5px',
+                fontWeight: '700',
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                color: 'var(--zed-green)',
+                boxShadow: '0 0 10px rgba(0, 245, 155, 0.15)'
+              }}>
+                <span style={{
+                  width: '5px',
+                  height: '5px',
+                  borderRadius: '50%',
+                  backgroundColor: 'var(--zed-green)',
+                  boxShadow: '0 0 6px var(--zed-green)'
+                }} />
                 TINKER LoRA
               </span>
             </div>
-            <div style={{ fontSize: '11px', color: '#64748B', fontFamily: 'var(--font-mono)' }}>
-              gemma-2b &bull; 174ms air-gapped
+
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontSize: '11px',
+              color: '#94A3B8',
+              fontFamily: 'var(--font-sans)',
+              letterSpacing: '-0.01em'
+            }}>
+              <span style={{ color: '#CBD5E1', fontWeight: '500' }}>Gemma-2B</span>
+              <span style={{ color: 'rgba(255, 255, 255, 0.2)' }}>&bull;</span>
+              <span style={{ color: 'var(--zed-green)', fontWeight: '600' }}>174ms Direct Decode</span>
+              <span style={{ color: 'rgba(255, 255, 255, 0.2)' }}>&bull;</span>
+              <span style={{ color: '#64748B' }}>Air-Gapped</span>
             </div>
           </div>
         </div>
