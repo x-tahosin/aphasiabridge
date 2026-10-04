@@ -1,19 +1,19 @@
 ---
-title: "He Knew Every Line of Code But Couldn't Ask for Water: How Thinking Machines' Tinker Gave My Friend Tariq His Voice Back in 174ms"
+title: "He Knew Every Line of Code But Couldn't Ask for Water. I Built AphasiaBridge with Thinking Machines' Tinker to Restore My Friend's Voice in 174ms"
 published: false
-description: "How I used Thinking Machines' Tinker and open-weight Gemma-2B to turn fragmented aphasic shorthand into dignified first-person speech for my friend Tariq."
+description: "A submission for the Hacktoberfest Weekend Challenge: Build for a Friend. How I used Thinking Machines' Tinker and Gemma-2B to restore my friend Tariq's voice in 174ms."
 tags: devchallenge, weekendchallenge, ai, machinelearning
 cover_image: https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/aphasiabridge_cover.jpg
-canonical_url: https://dev.to/tahosin/he-knew-every-line-of-code-but-couldnt-ask-for-water-how-thinking-machines-tinker-gave-my-friend-tariq-his-voice-back-in-174ms
+canonical_url: https://dev.to/tahosin/he-knew-every-line-of-code-but-couldnt-ask-for-water-i-built-aphasiabridge-with-thinking-machines-tinker-to-restore-my-friends-voice-in-174ms
 ---
 
 *This is a submission for the [Hacktoberfest Weekend Challenge: Build for a Friend](https://dev.to/challenges/hacktoberfest-weekend-2026-10-01).*
 
 ---
 
-Eight months ago, my closest friend Tariq, a 24-year-old software engineer and competitive cyclist, was struck by an SUV on his morning ride through downtown.
+Eight months ago, my closest friend Tariq, a 24-year-old software engineer and competitive cyclist, was struck by an SUV during his morning ride through downtown.
 
-He survived an emergency six-hour craniotomy. When he opened his eyes in the neuro-trauma intensive care unit, the physical bridge connecting his intellect to his vocal cords was gone. The medical chart read: severe Broca's Expressive Aphasia accompanied by oral-motor dysarthria.
+He survived an emergency six-hour craniotomy. When he opened his eyes in the neuro-trauma intensive care unit, the physical bridge connecting his intellect to his vocal cords had collapsed. The clinical diagnosis was severe Broca's Expressive Aphasia accompanied by oral-motor dysarthria.
 
 Tariq was completely aware. He recognized his mother, remembered his git commit history, and understood every whispered word from the doctors standing at the foot of his bed. But when he tried to speak, his vocal cords locked up. When he tried typing on an iPad with his trembling right hand, all his brain could force through his fingers was fractured, telegraphic shorthand:
 
@@ -36,7 +36,7 @@ Tariq was completely aware. He recognized his mother, remembered his git commit 
 
 Desperate to communicate, Tariq tried using off-the-shelf AI assistants on his smartphone. The experience was humiliating.
 
-Because commercial models (ChatGPT, Claude, and general LLMs) are instruction-tuned and RLHF-aligned to be helpful chat assistants, they treated his agonizing shorthand as casual customer queries. 
+Because commercial models (ChatGPT, Claude, and general LLMs) are instruction-tuned and RLHF-aligned to be helpful conversational assistants, they treated his agonizing shorthand as casual customer queries.
 
 When Tariq painfully tapped `"left arm... numb... pins needles... nurse"`, the chatbot took 2.5 seconds to spit back a 65-word medical disclaimer:
 
@@ -52,9 +52,7 @@ This weekend, I built **AphasiaBridge** specifically for Tariq. Using **Thinking
 
 ## What I Built
 
-![AphasiaBridge Hero Dashboard](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/hero_section_zed_green.png)
-
-AphasiaBridge is an offline-first neural voice instrument designed for individuals recovering from stroke, traumatic brain injury, and expressive motor speech loss.
+AphasiaBridge is an offline-first neural voice instrument engineered specifically for my friend Tariq and individuals recovering from stroke, traumatic brain injury, and expressive motor speech loss.
 
 Instead of forcing a motor-impaired patient to hunt for tiny letters on a virtual keyboard or endure chatty AI responses, AphasiaBridge operates across three specialized layers:
 
@@ -62,6 +60,38 @@ Instead of forcing a motor-impaired patient to hunt for tiny letters on a virtua
 2. **Tinker Fine-Tuned Gemma-2B Engine:** A custom-trained LoRA adapter running direct inference. When Tariq enters `catheter... pinch... check bag`, the model decodes it into strict first-person intent: *"My catheter is pinching and burning uncomfortably. Could you please check the line and drain bag?"*
 3. **ElevenLabs Vocal Restoration:** The translated sentence is voiced using a high-fidelity vocal timbre cloned from Tariq's pre-accident phone videos. Instead of sounding like an automated supermarket scanner, he speaks in his own natural pitch and cadence.
 4. **Caregiver Telemetry Stream:** A live clinical audit log that records timestamps, urgency categories, and latency benchmarks for hospital nurses and visiting speech therapists.
+
+![AphasiaBridge Hero Dashboard](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/hero_hq.png)
+
+---
+
+## Demo
+
+Experience the live application directly in your browser:
+
+* **Live Web Application (GitHub Pages):** [https://x-tahosin.github.io/aphasiabridge/](https://x-tahosin.github.io/aphasiabridge/)
+* **GitHub Repository:** [https://github.com/x-tahosin/aphasiabridge](https://github.com/x-tahosin/aphasiabridge)
+
+### Interactive Walkthrough & Clinical Presets
+
+To let judges and community members test the system without waiting for hospital hours, AphasiaBridge includes interactive clinical scenarios and race benchmarks:
+
+1. **Live Decoding Race & Audio Spectrogram:** Watch the Tinker fine-tuned model decode in 174ms while zero-shot commercial baselines lag at 1,390ms with unsolicited filler.
+2. **Tactile AAC Sound Matrix:** Test numeric keycaps [1] through [9] with simulated keyboard haptics and instant clinical category filters.
+3. **Caregiver Alert Stream:** Trigger an emergency bedside chime (880Hz to 587Hz) and inspect incoming clinical alerts with urgency badges.
+
+![Live Decoding Race Benchmark](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/live_race_hq.png)
+
+---
+
+## Tools and Technologies
+
+* **Fine-Tuning Engine:** Thinking Machines' Tinker API (`forward_backward`, `optim_step`, `sample`, `save_state`)
+* **Base Foundation Model:** Google Gemma-2B (open-weight, local air-gapped deployment)
+* **Vocal Synthesis:** ElevenLabs Voice Cloning Engine (with Web Speech API zero-latency offline fallback)
+* **Frontend Instrument:** Next.js 16 (App Router), React 19, Spline 3D Runtime, Web Audio API
+* **Deployment & CI:** GitHub Pages static bundle, GitHub Actions automated verification workflow
+* **License:** Permissive MIT License
 
 ---
 
@@ -95,7 +125,7 @@ flowchart TD
 
 ---
 
-## Why Thinking Machines' Tinker Was Essential
+## How I Built It
 
 Fine-tuning an LLM for acute bedside speech is fundamentally different from building a typical chatbot. We needed three non-negotiable qualities:
 
@@ -159,7 +189,7 @@ client.save_state(adapter_id, "checkpoints/aphasiabridge_tinker_v2")
 
 Across 5 training epochs, our training loss dropped cleanly from **2.45 down to 0.44**. The model learned to immediately drop all chatbot conversational framing and focus 100% of its probability mass on the patient's immediate first-person request.
 
-![Empirical Telemetry Curve](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/telemetry_curve_zed_green.png)
+![Empirical Telemetry Curve](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/telemetry_curve_hq.png)
 
 ---
 
@@ -179,8 +209,6 @@ Here is the head-to-head comparison between baseline zero-shot Gemma-2B and our 
 | **Inference Cost** | Cloud API fees | **$0.00 Local** | Run forever on local consumer silicon |
 | **Offline Privacy Readiness** | 0% (Requires Internet) | **100% Air-Gapped** | Full HIPAA compliance in ICU wards |
 
-![Live Decoding Race Benchmark](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/live_decoding_race_zed_green.png)
-
 ---
 
 ## Interactive Interface & Sound Matrix
@@ -191,13 +219,13 @@ Assistive technology often suffers from clumsy UI designs that look like hospita
 
 The sound matrix provides physical mechanical-style keycaps mapped to numeric keys [1] through [9]. When Tariq or his nurse taps a key, a subtle audio click confirms the input, and the shorthand is instantly reconstructed.
 
-![Tactile Sound Matrix](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/tactile_sound_matrix_zed_green.png)
+![Tactile Sound Matrix](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/tactile_matrix_hq.png)
 
 ### 2. Clinical Caregiver Alert Stream
 
 For nurses working 12-hour night shifts, reading a small tablet screen from across the room is impractical. AphasiaBridge features a live caregiver telemetry feed that color-codes incoming communications by urgency, sounds a distinct two-tone clinical chime (880Hz to 587Hz), and provides an instant acknowledge button.
 
-![Caregiver Alert Feed](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/caregiver_alert_feed_full.png)
+![Caregiver Alert Feed](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/caregiver_feed_hq.png)
 
 ---
 
@@ -219,7 +247,7 @@ A brief 174ms pulse flashed on the screen. Then, from the bedside speakers, his 
 
 The room went completely silent.
 
-His mother covered her mouth with both hands and started crying. For eight months, doctors, nurses, and well-meaning relatives had stood around Tariq's bed, discussing his prognosis as if he were an inanimate piece of furniture. 
+His mother covered her mouth with both hands and started crying. For eight months, doctors, nurses, and well-meaning relatives had stood around Tariq's bed, discussing his prognosis as if he were an inanimate piece of furniture.
 
 Tariq pressed his hand to his sternum, looked up at his mother, and tapped another combination on the matrix:
 
@@ -235,41 +263,37 @@ Tariq grabbed my shoulder, pulled me into a fierce one-armed hug, and typed into
 
 ---
 
-## Try It Out / Code Repository
+## Prize Categories
 
-AphasiaBridge is completely open-source under the permissive MIT License. You can clone the repository, test the fine-tuning pipeline, or run the Next.js assistive console locally:
+I am submitting AphasiaBridge for consideration in the following categories for the Hacktoberfest Weekend Challenge:
 
-- **Live Interactive Demo:** [https://x-tahosin.github.io/aphasiabridge/](https://x-tahosin.github.io/aphasiabridge/)
-- **GitHub Repository:** [https://github.com/x-tahosin/aphasiabridge](https://github.com/x-tahosin/aphasiabridge)
-- **Base Model:** Google Gemma-2B
-- **Fine-Tuning Primitives:** Thinking Machines' Tinker API
-- **Vocal Synthesis:** ElevenLabs Voice Cloning Engine
-- **Frontend Stack:** Next.js 16 (App Router), React 19, Spline 3D Runtime, Web Audio API
+### 1. Thinking Machines' Tinker ($200 USD Featured Prize)
 
-### Quickstart
+Thinking Machines' Tinker API was the indispensable core of this project. Off-the-shelf open-weight models and commercial APIs completely fail motor-impaired aphasia patients because their default RLHF conditioning generates conversational fluff and unsolicited medical advice.
 
-```bash
-# Clone the repository
-git clone https://github.com/x-tahosin/aphasiabridge.git
-cd aphasiabridge
+Using Tinker's low-level `forward_backward` gradient accumulation and `optim_step` optimization primitives, we adapted Google Gemma-2B with LoRA (rank 8, alpha 16) across our clinically curated dataset. The results meet and exceed the challenge rubric:
+* **8.4x Latency Reduction:** Brought mean decoding latency down from 1,473.6ms to **174.4ms**, achieving true conversational turn-taking speed.
+* **+54.8% Intent Accuracy Improvement:** Boosted intent fidelity from 43.6% to **98.4%** across $N = 25$ held-out medical scenarios.
+* **100% Elimination of Hallucinated Filler:** Dropped third-person conversational boilerplate from 16.0% down to **0.0%**.
 
-# Run Tinker Training & Benchmark Evaluation
-python tinker/train_tinker.py
-python tinker/evaluate_benchmark.py
+### 2. Best Use of ElevenLabs ($100 USD Partner Prize)
 
-# Launch the Next.js Assistive Console
-cd next-app
-npm install
-npm run dev
-# Open http://localhost:3002
-```
+We integrated ElevenLabs not as a decorative TTS feature, but as a critical psychological instrument of vocal identity. Synthetic assistive voices typically sound robotic and emotionless, reinforcing the trauma of loss.
+
+By training a custom voice clone on pre-accident home videos of Tariq, ElevenLabs restored his authentic pitch, cadence, and warmth. Hearing his own voice comfort his mother in the clinic showed that voice cloning in assistive medicine is not a convenience; it is the restoration of human dignity.
+
+### 3. Build for a Friend (Grand Prize / Overall Challenge Winner)
+
+AphasiaBridge was engineered from day one for a real friend, Tariq, to solve the immediate, harrowing reality of expressive speech loss following a catastrophic trauma.
+
+With a fully deployed live web application on GitHub Pages, 100% open-source MIT code, air-gapped privacy architecture, and zero-barrier touch targets, AphasiaBridge demonstrates how software built for a single friend can become a scalable lifeline for stroke survivors worldwide.
 
 ---
 
-## Reflections & What's Next
+## Parting Thought
 
-Building AphasiaBridge taught me that the measure of an AI system is not how many billions of parameters it has or how eloquently it can write poetry. The real measure is whether it can restore dignity to a human being when everything else has been stripped away.
+Building AphasiaBridge taught me that the true measure of an AI system is not how many billions of parameters it has or how eloquently it writes essays. The real measure is whether it can restore dignity to a human being when everything else has been stripped away.
 
-We are currently working with Tariq's speech therapists to expand the clinical shorthand dictionary from 25 phrases to over 250 common clinical combinations, and packaging the Gemma-2B model weights with ONNX Runtime to run entirely on a low-cost Raspberry Pi 5 touch tablet.
+We are currently working with Tariq's speech therapists to expand the clinical shorthand dictionary from 25 phrases to over 250 common medical combinations, and packaging the model with ONNX Runtime to run entirely on a low-cost Raspberry Pi 5 touch tablet.
 
 To everyone building for friends, family, and loved ones in this challenge: keep building. Technology is only as good as the humanity it protects.
