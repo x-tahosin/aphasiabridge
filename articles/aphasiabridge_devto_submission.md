@@ -2,12 +2,12 @@
 title: "He Knew Every Line of Code But Couldn't Ask for Water. I Built AphasiaBridge with Thinking Machines' Tinker to Restore My Friend's Voice in 174ms"
 published: false
 description: "A submission for the Hacktoberfest Weekend Challenge: Build for a Friend. How I used Thinking Machines' Tinker and Gemma-2B to restore my friend Tariq's voice in 174ms."
-tags: devchallenge, weekendchallenge, ai, machinelearning
+tags: devchallenge, weekendchallenge, hf26challenge, ai
 cover_image: https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/aphasiabridge_cover.jpg
-canonical_url: https://dev.to/tahosin/he-knew-every-line-of-code-but-couldnt-ask-for-water-i-built-aphasiabridge-with-thinking-machines-tinker-to-restore-my-friends-voice-in-174ms
+canonical_url: https://dev.to/tahosin/he-knew-every-line-of-code-but-couldnt-ask-for-water-how-thinking-machines-tinker-gave-my-friend-35g3-temp-slug-6567249
 ---
 
-*This is a submission for the [Hacktoberfest Weekend Challenge: Build for a Friend](https://dev.to/challenges/hacktoberfest-weekend-2026-10-01).*
+*This is a submission for the [Hacktoberfest Weekend Challenge: Build for a Friend](https://dev.to/challenges/hacktoberfest-weekend-2026-10-01)*
 
 ---
 
@@ -81,6 +81,18 @@ To let judges and community members test the system without waiting for hospital
 3. **Caregiver Alert Stream:** Trigger an emergency bedside chime (880Hz to 587Hz) and inspect incoming clinical alerts with urgency badges.
 
 ![Live Decoding Race Benchmark](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/live_race_hq.png?v=1a5fd4e)
+
+---
+
+## Code
+
+{% github https://github.com/x-tahosin/aphasiabridge %}
+
+All training pipelines, benchmark datasets, Web Audio clinical chimes, and Next.js frontend assets are fully open-sourced under the permissive MIT License:
+
+* **GitHub Repository:** [https://github.com/x-tahosin/aphasiabridge](https://github.com/x-tahosin/aphasiabridge)
+* **Tinker Fine-Tuning Pipeline:** [tinker/train_tinker.py](https://github.com/x-tahosin/aphasiabridge/blob/main/tinker/train_tinker.py)
+* **Clinical AAC Dataset:** [data/dataset.json](https://github.com/x-tahosin/aphasiabridge/blob/main/data/dataset.json)
 
 ---
 
@@ -208,6 +220,17 @@ Here is the head-to-head comparison between baseline zero-shot Gemma-2B and our 
 | **First-Person Agency Compliance** | 36.0% | **100.0%** | Strict adherence to the patient's voice |
 | **Inference Cost** | Cloud API fees | **$0.00 Local** | Run forever on local consumer silicon |
 | **Offline Privacy Readiness** | 0% (Requires Internet) | **100% Air-Gapped** | Full HIPAA compliance in ICU wards |
+
+---
+
+## Why Does Open Innovation Matter?
+
+In assistive bedside speech, open innovation is not an ideological luxury; it is a clinical and ethical prerequisite:
+
+1. **Air-Gapped Privacy in Hospital Wards:** Intensive care units and rehabilitation centers are shielded environments governed by strict medical privacy regulations (HIPAA). Closed cloud LLMs route intimate patient telemetry through third-party commercial servers over public networks. Open-weight models like Google Gemma-2B ensure 100% of patient data remains entirely within the local bedside hardware.
+2. **Sub-200ms Conversational Turn-Taking:** Natural human conversation requires turn-taking intervals under 200 milliseconds. Commercial cloud APIs incur multiple transit hops, network jitter, and queue delays averaging 1,400ms+, destroying conversational flow. Running local open weights tuned with Tinker LoRA adapters brings bedside inference down to **174 milliseconds**.
+3. **Eradicating Unsolicited Third-Person Filler:** Closed commercial models are permanently RLHF-aligned to output conversational filler and patronizing safety lectures (*"As an AI language model, please consult a medical provider..."*). Because we had access to open weights, we were able to use Thinking Machines' Tinker API to surgically steer the probability distribution, guaranteeing 100% first-person agency with zero medical lectures.
+4. **Zero Marginal Cost for Vulnerable Patients:** Traumatic brain injury rehabilitation is financially exhausting for families. Commercial per-token API billing creates anxiety around how many sentences a patient can afford to speak each day. An open-weight model running on consumer hardware costs exactly $0.00 per inference.
 
 ---
 
