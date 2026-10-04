@@ -241,7 +241,7 @@ export default function Home() {
   };
 
   return (
-    <div style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div suppressHydrationWarning style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
       {/* SSS-Tier Zed Status Bar Header */}
       <header style={{
