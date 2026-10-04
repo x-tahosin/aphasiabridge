@@ -274,18 +274,7 @@ export default function Home() {
 
       </section>
 
-      {/* SSS-Tier Minimalist Footer */}
-      <footer style={{
-        marginTop: 'auto',
-        borderTop: '1px solid rgba(0, 245, 155, 0.1)',
-        padding: '28px',
-        textAlign: 'center',
-        fontSize: '11px',
-        color: '#64748B',
-        fontFamily: 'var(--font-mono)'
-      }}>
-        AphasiaBridge &bull; Thinking Machines' Tinker API &bull; ElevenLabs &bull; Built for Tariq &bull; Zed Green Edition
-      </footer>
+
 
       {/* Story Drawer */}
       <StoryDrawer isOpen={isStoryOpen} onClose={() => setIsStoryOpen(false)} />
