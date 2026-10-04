@@ -61,7 +61,7 @@ Instead of forcing a motor-impaired patient to hunt for tiny letters on a virtua
 3. **ElevenLabs Vocal Restoration:** The translated sentence is voiced using a high-fidelity vocal timbre cloned from Tariq's pre-accident phone videos. Instead of sounding like an automated supermarket scanner, he speaks in his own natural pitch and cadence.
 4. **Caregiver Telemetry Stream:** A live clinical audit log that records timestamps, urgency categories, and latency benchmarks for hospital nurses and visiting speech therapists.
 
-![AphasiaBridge Hero Dashboard](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/hero_hq.png?v=1a5fd4e)
+![AphasiaBridge Hero Dashboard](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/hero_hq.png?v=7afe570)
 
 ---
 
