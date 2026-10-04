@@ -1,14 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
-import { 
-  AlertTriangle, Droplets, Bed, Heart, ShieldAlert, Smile, 
-  Send, Sparkles, Volume2 
-} from './Icons';
+import React, { useState, useEffect } from 'react';
+import { Send, Sparkles, Terminal, CornerDownLeft } from './Icons';
 
 export default function TactileConsole({ dataset, onSelect, activeShorthand, onCustomSubmit }) {
   const [filter, setFilter] = useState('ALL');
   const [customText, setCustomText] = useState('');
+
+  // Subtle Web Audio Mechanical Switch Sound
+  const playMechanicalClick = () => {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(1400, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(320, audioCtx.currentTime + 0.04);
+
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.04);
+    } catch (e) {}
+  };
 
   const domains = [
     { id: 'ALL', label: 'All Keys' },
@@ -23,26 +41,58 @@ export default function TactileConsole({ dataset, onSelect, activeShorthand, onC
     ? dataset 
     : dataset.filter(d => d.category === filter);
 
+  const handleKeyClick = (item) => {
+    playMechanicalClick();
+    onSelect(item);
+  };
+
+  // Keyboard shortcut listener for keys 1-9
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // If typing in input, don't hijack numbers
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      const num = parseInt(e.key, 10);
+      if (num >= 1 && num <= 9 && items[num - 1]) {
+        handleKeyClick(items[num - 1]);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [items]);
+
+  const quickSamples = [
+    "water... ice... throat burn",
+    "catheter... pinch... check bag",
+    "chest tight... breathe hard",
+    "love you... hold hand"
+  ];
+
   return (
     <div style={{ marginTop: '24px' }}>
       
-      {/* Category Pills */}
+      {/* Category Filter Bar */}
       <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '16px', scrollbarWidth: 'none' }}>
         {domains.map(d => (
           <button
             key={d.id}
-            onClick={() => setFilter(d.id)}
+            onClick={() => {
+              playMechanicalClick();
+              setFilter(d.id);
+            }}
             style={{
               padding: '8px 16px',
               borderRadius: '9999px',
-              border: filter === d.id ? '1px solid var(--cyan-core)' : '1px solid rgba(255,255,255,0.08)',
-              background: filter === d.id ? 'rgba(0, 242, 254, 0.1)' : 'rgba(255,255,255,0.02)',
-              color: filter === d.id ? 'var(--cyan-core)' : '#94A3B8',
+              border: filter === d.id ? '1px solid var(--zed-green)' : '1px solid rgba(255,255,255,0.08)',
+              background: filter === d.id ? 'var(--zed-bg-tint)' : 'rgba(255,255,255,0.02)',
+              color: filter === d.id ? 'var(--zed-green)' : '#94A3B8',
               fontSize: '12px',
               fontWeight: '700',
+              fontFamily: 'var(--font-mono)',
               cursor: 'pointer',
               whiteSpace: 'nowrap',
-              transition: 'all 0.2s ease',
+              transition: 'all 0.18s ease',
+              boxShadow: filter === d.id ? '0 0 16px var(--zed-glow)' : 'none'
             }}
           >
             {d.label}
@@ -50,42 +100,62 @@ export default function TactileConsole({ dataset, onSelect, activeShorthand, onC
         ))}
       </div>
 
-      {/* Tactile Grid */}
+      {/* Tactile Keycap Grid */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
         gap: '14px',
         marginTop: '8px'
       }}>
-        {items.slice(0, 12).map((item) => {
+        {items.slice(0, 12).map((item, idx) => {
           const isUrgent = item.urgency === 'critical' || item.urgency === 'high';
           const isSelected = activeShorthand === item.shorthand;
 
           return (
             <div
               key={item.id}
-              onClick={() => onSelect(item)}
-              className={`tactile-key ${isUrgent ? 'tactile-key-urgent' : ''}`}
-              style={{
-                borderColor: isSelected ? 'var(--cyan-core)' : undefined,
-                boxShadow: isSelected ? '0 0 25px var(--cyan-glow)' : undefined
-              }}
+              onClick={() => handleKeyClick(item)}
+              className={`tactile-key ${isUrgent ? 'tactile-key-urgent' : ''} ${isSelected ? 'tactile-key-selected' : ''}`}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{
-                  fontSize: '10px',
-                  fontFamily: 'var(--font-mono)',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: isUrgent ? '#FF3366' : '#64748B',
-                  fontWeight: '700'
-                }}>
-                  {item.category.replace('_', ' ')}
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: isSelected ? 'var(--zed-green)' : (isUrgent ? 'var(--coral-urgent)' : '#334155'),
+                    boxShadow: isSelected ? '0 0 8px var(--zed-green)' : 'none'
+                  }} />
+                  <span style={{
+                    fontSize: '10px',
+                    fontFamily: 'var(--font-mono)',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    color: isUrgent ? '#FF6B8B' : (isSelected ? 'var(--zed-green)' : '#64748B'),
+                    fontWeight: '700'
+                  }}>
+                    {item.category.replace('_', ' ')}
+                  </span>
+                </div>
 
-                <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: '#10B981', fontWeight: '700' }}>
-                  {item.tinker_latency_ms}ms
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  {idx < 9 && (
+                    <span style={{
+                      fontSize: '10px',
+                      fontFamily: 'var(--font-mono)',
+                      background: 'rgba(255,255,255,0.06)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      color: '#94A3B8',
+                      padding: '1px 5px',
+                      borderRadius: '4px'
+                    }}>
+                      [{idx + 1}]
+                    </span>
+                  )}
+                  <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--zed-green)', fontWeight: '700' }}>
+                    {item.tinker_latency_ms}ms
+                  </span>
+                </div>
               </div>
 
               {/* Shorthand Token Fragment */}
@@ -93,7 +163,7 @@ export default function TactileConsole({ dataset, onSelect, activeShorthand, onC
                 fontFamily: 'var(--font-mono)',
                 fontSize: '13px',
                 fontWeight: '600',
-                color: isUrgent ? '#FDA4AF' : '#F1F5F9',
+                color: isUrgent ? '#FDA4AF' : (isSelected ? '#FFFFFF' : '#E2E8F0'),
                 marginBottom: '6px'
               }}>
                 "{item.shorthand}"
@@ -102,7 +172,7 @@ export default function TactileConsole({ dataset, onSelect, activeShorthand, onC
               {/* Dignified Preview */}
               <div style={{
                 fontSize: '12px',
-                color: '#94A3B8',
+                color: isSelected ? '#A7F3D0' : '#8592A3',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis'
@@ -114,54 +184,88 @@ export default function TactileConsole({ dataset, onSelect, activeShorthand, onC
         })}
       </div>
 
-      {/* Direct Shorthand Terminal Input */}
-      <div className="glass-surface" style={{ padding: '16px 20px', marginTop: '20px', display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <input
-          type="text"
-          value={customText}
-          onChange={(e) => setCustomText(e.target.value)}
-          placeholder="Custom Shorthand (e.g. cold water... throat burn... bendy straw)"
-          style={{
-            flex: 1,
-            background: 'transparent',
-            border: 'none',
-            outline: 'none',
-            color: '#F8FAFC',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px'
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && customText.trim()) {
-              onCustomSubmit(customText.trim());
-              setCustomText('');
-            }
-          }}
-        />
+      {/* SSS-Tier Zed Interactive Terminal Input */}
+      <div className="glass-surface" style={{
+        padding: '18px 22px',
+        marginTop: '22px',
+        border: '1px solid rgba(0, 245, 155, 0.25)',
+        boxShadow: '0 12px 30px -10px rgba(0, 245, 155, 0.15)'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Terminal size={14} color="var(--zed-green)" />
+            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'var(--zed-green)', fontWeight: '700' }}>
+              tariq@aphasiabridge:~$ input shorthand
+            </span>
+          </div>
 
-        <button
-          onClick={() => {
-            if (customText.trim()) {
-              onCustomSubmit(customText.trim());
-              setCustomText('');
-            }
-          }}
-          style={{
-            padding: '10px 20px',
-            borderRadius: '10px',
-            border: 'none',
-            background: 'var(--cyan-core)',
-            color: '#030508',
-            fontSize: '12px',
-            fontWeight: '800',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px'
-          }}
-        >
-          <Send size={13} />
-          <span>Decode</span>
-        </button>
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+            {quickSamples.map((sample, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  playMechanicalClick();
+                  setCustomText(sample);
+                  onCustomSubmit(sample);
+                }}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderRadius: '6px',
+                  padding: '3px 8px',
+                  fontSize: '10px',
+                  fontFamily: 'var(--font-mono)',
+                  color: '#94A3B8',
+                  cursor: 'pointer'
+                }}
+              >
+                "{sample}"
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <input
+            type="text"
+            value={customText}
+            onChange={(e) => setCustomText(e.target.value)}
+            placeholder="Type patient shorthand... (press Enter or [Decode])"
+            style={{
+              flex: 1,
+              background: 'rgba(0, 0, 0, 0.5)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '10px',
+              padding: '12px 16px',
+              outline: 'none',
+              color: '#FFFFFF',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '13px'
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && customText.trim()) {
+                playMechanicalClick();
+                onCustomSubmit(customText.trim());
+                setCustomText('');
+              }
+            }}
+          />
+
+          <button
+            onClick={() => {
+              if (customText.trim()) {
+                playMechanicalClick();
+                onCustomSubmit(customText.trim());
+                setCustomText('');
+              }
+            }}
+            className="btn-zed"
+            style={{ padding: '12px 20px', borderRadius: '10px' }}
+          >
+            <Send size={13} />
+            <span>Decode</span>
+          </button>
+        </div>
       </div>
 
     </div>

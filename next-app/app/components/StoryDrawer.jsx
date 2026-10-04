@@ -10,8 +10,8 @@ export default function StoryDrawer({ isOpen, onClose }) {
     <div style={{
       position: 'fixed',
       inset: 0,
-      background: 'rgba(0, 0, 0, 0.85)',
-      backdropFilter: 'blur(20px)',
+      background: 'rgba(0, 0, 0, 0.88)',
+      backdropFilter: 'blur(24px)',
       zIndex: 100,
       display: 'flex',
       alignItems: 'center',
@@ -23,8 +23,8 @@ export default function StoryDrawer({ isOpen, onClose }) {
         width: '100%',
         padding: '36px',
         position: 'relative',
-        border: '1px solid rgba(0, 242, 254, 0.3)',
-        boxShadow: '0 30px 80px rgba(0, 242, 254, 0.15)'
+        border: '1px solid rgba(0, 245, 155, 0.35)',
+        boxShadow: '0 30px 80px rgba(0, 245, 155, 0.15)'
       }}>
         <button
           onClick={onClose}
@@ -48,8 +48,8 @@ export default function StoryDrawer({ isOpen, onClose }) {
         </button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <Heart size={14} fill="#FF3366" color="#FF3366" />
-          <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#FF3366', fontWeight: '700' }}>
+          <Heart size={14} fill="#FF2E63" color="#FF2E63" />
+          <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#FF2E63', fontWeight: '700' }}>
             Built for a Friend &bull; Hacktoberfest 2026
           </span>
         </div>
@@ -68,8 +68,8 @@ export default function StoryDrawer({ isOpen, onClose }) {
           </p>
 
           <div style={{
-            background: 'rgba(0, 242, 254, 0.05)',
-            border: '1px solid rgba(0, 242, 254, 0.2)',
+            background: 'rgba(0, 245, 155, 0.06)',
+            border: '1px solid rgba(0, 245, 155, 0.25)',
             borderRadius: '12px',
             padding: '16px',
             color: '#E2E8F0',
@@ -82,16 +82,12 @@ export default function StoryDrawer({ isOpen, onClose }) {
 
         <button
           onClick={onClose}
+          className="btn-zed"
           style={{
             marginTop: '24px',
             width: '100%',
             padding: '12px',
             borderRadius: '10px',
-            border: 'none',
-            background: 'var(--cyan-core)',
-            color: '#030508',
-            fontWeight: '800',
-            fontSize: '13px',
             cursor: 'pointer'
           }}
         >

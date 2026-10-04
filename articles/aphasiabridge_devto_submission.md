@@ -167,21 +167,21 @@ Step 35 | Loss: 0.4474 | PPL: 1.56  | GradNorm: 0.059
 
 ---
 
-## Production Interface & Visual Design (Next.js + Vanilla CSS + Spline 3D)
+## Production Interface & Visual Design (SSS-Tier Zed Green Edition)
 
-Rather than building an overwhelming dashboard, AphasiaBridge embraces an ultra-clean, minimal text, obsidian-dark design crafted specifically for cognitive rest and rapid tactile interaction:
+Rather than building an overwhelming dashboard, AphasiaBridge embraces an ultra-clean, minimal text, obsidian-slate design infused with signature **Zed Green (`#00F59B` / `#10B981`)** phosphor aesthetics crafted specifically for cognitive calm, real-time audio visualization, and rapid tactile interaction:
 
-![AphasiaBridge 3D Spline Hero](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/hero_section.png)
-*Figure 1: The Spline 3D interactive avatar visualizer rendering Tariq's neural intent state in real-time with zero visual clutter.*
+![AphasiaBridge 3D Spline Hero](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/hero_section_zed_green.png)
+*Figure 1: The Spline 3D interactive avatar visualizer rendering Tariq's neural intent state in real-time with responsive mouse-follow particle lattice.*
 
-![Dual Engine Latency Horizon](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/latency_horizon.png)
-*Figure 2: The real-time Latency Horizon comparing the 174ms Tinker LoRA engine against the 1,390ms slow zero-shot baseline.*
+![Dual Engine Latency Horizon & Audio Spectrogram](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/live_decoding_race_zed_green.png)
+*Figure 2: The real-time Live Decoding Race comparing the 174ms Tinker LoRA engine against the 1,390ms slow zero-shot baseline, paired with an integrated 44.1kHz Zed Green audio spectrogram.*
 
-![Tactile AAC Sound Matrix](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/switchboard_decoded.png)
-*Figure 3: High-contrast tactile AAC console designed for patients with limited fine motor dexterity.*
+![Tactile AAC Sound Matrix](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/tactile_sound_matrix_zed_green.png)
+*Figure 3: High-contrast 3D tactile AAC console with physical [1]-[9] keyboard shortcuts and interactive patient shorthand terminal.*
 
-![Tinker LoRA Telemetry Curve](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/telemetry_curve.png)
-*Figure 4: Empirical Tinker training convergence curve validating loss reduction from 2.45 to 0.44.*
+![Tinker LoRA Telemetry Curve](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/telemetry_curve_zed_green.png)
+*Figure 4: Empirical Tinker training convergence curve validating loss reduction from 2.45 to 0.44 across all 5 training epochs.*
 
 ---
 

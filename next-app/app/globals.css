@@ -1,33 +1,47 @@
 /* =========================================================================
-   AphasiaBridge - Luxury Assistive Instrument & Production Design System
-   Pure Vanilla CSS • Handcrafted Luxury Aesthetics • Minimalist Hi-Fi
+   AphasiaBridge - SSS-Tier Production Design System (Zed Green Edition)
+   Pure Vanilla CSS • Zed Editor Phosphor Emerald & Deep Obsidian Aesthetic
    ========================================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --bg-deep: #030508;
-  --bg-surface: #070B12;
-  --bg-glass: rgba(11, 17, 28, 0.75);
-  --bg-glass-active: rgba(18, 28, 46, 0.9);
-  
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-focus: rgba(0, 242, 254, 0.5);
-  --border-emerald: rgba(16, 185, 129, 0.4);
-  
-  --cyan-core: #00F2FE;
-  --cyan-glow: rgba(0, 242, 254, 0.25);
-  --emerald-tinker: #10B981;
-  --emerald-glow: rgba(16, 185, 129, 0.25);
-  --coral-urgent: #FF3366;
-  --coral-glow: rgba(255, 51, 102, 0.3);
+  /* Zed Editor Deep Charcoal / Obsidian Base */
+  --bg-deep: #07090D;
+  --bg-surface: #0B0E14;
+  --bg-elevated: #10141D;
+  --bg-glass: rgba(11, 14, 20, 0.78);
+  --bg-glass-active: rgba(16, 20, 29, 0.92);
+
+  /* Zed Signature Phosphor Green Palette */
+  --zed-green: #00F59B;
+  --zed-green-hover: #00FF88;
+  --zed-emerald: #10B981;
+  --zed-emerald-dark: #059669;
+  --zed-mint: #34D399;
+  --zed-glow: rgba(0, 245, 155, 0.22);
+  --zed-glow-intense: rgba(0, 245, 155, 0.45);
+  --zed-bg-tint: rgba(0, 245, 155, 0.06);
+
+  /* Borders & Hairlines */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-zed: rgba(0, 245, 155, 0.25);
+  --border-zed-active: rgba(0, 245, 155, 0.6);
+  --border-glass: rgba(255, 255, 255, 0.1);
+
+  /* Functional Accents */
+  --coral-urgent: #FF2E63;
+  --coral-glow: rgba(255, 46, 99, 0.35);
   --amber-baseline: #F59E0B;
-  
-  --font-display: 'Outfit', -apple-system, sans-serif;
-  --font-sans: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  
+  --amber-glow: rgba(245, 158, 11, 0.25);
+
+  /* High-Fidelity Typography */
+  --font-display: 'Geist', 'Outfit', -apple-system, sans-serif;
+  --font-sans: 'Geist', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Geist Mono', monospace;
+
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-tactile: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 * {
@@ -37,6 +51,11 @@
   -webkit-font-smoothing: antialiased;
 }
 
+html {
+  background-color: var(--bg-deep);
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg-deep);
   color: #E2E8F0;
@@ -44,117 +63,148 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  selection-background-color: var(--zed-green);
+  selection-color: #07090D;
 }
 
-/* Ambient Radial Mesh */
+::selection {
+  background: var(--zed-green);
+  color: #07090D;
+}
+
+/* Ambient Zed Radial Aurora */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background: 
-    radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08) 0%, transparent 60%),
-    radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 90% 70%, rgba(255, 51, 102, 0.04) 0%, transparent 45%);
+    radial-gradient(circle at 50% 0%, rgba(0, 245, 155, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 90% 60%, rgba(0, 245, 155, 0.06) 0%, transparent 45%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Subtly Textured Subtle Grid */
+/* Crisp Zed Code-Grid */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-size: 40px 40px;
+  background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 245, 155, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 245, 155, 0.025) 1px, transparent 1px);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Luxury Glass Surface */
+/* Zed SSS-Tier Glass Surfaces */
 .glass-surface {
   background: var(--bg-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border-subtle);
-  border-radius: 20px;
+  border-radius: 18px;
   box-shadow: 
-    0 30px 60px -15px rgba(0, 0, 0, 0.8),
+    0 30px 60px -15px rgba(0, 0, 0, 0.85),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: all 0.3s var(--ease-spring);
+  transition: border-color 0.25s var(--ease-spring), box-shadow 0.25s var(--ease-spring);
 }
 
 .glass-surface:hover {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(0, 245, 155, 0.2);
+  box-shadow: 
+    0 30px 60px -15px rgba(0, 0, 0, 0.9),
+    0 0 20px -5px rgba(0, 245, 155, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-/* Tactile 3D Physical Keycaps */
+/* Tactile Physical Keycaps - Zed Green Edition */
 .tactile-key {
-  background: linear-gradient(180deg, #131B2B 0%, #0B101D 100%);
+  background: linear-gradient(180deg, #111620 0%, #0C1017 100%);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 3px solid rgba(0, 0, 0, 0.6);
-  border-radius: 16px;
-  padding: 18px 20px;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.8);
+  border-radius: 14px;
+  padding: 16px 18px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: all 0.15s var(--ease-spring);
+  transition: all 0.15s var(--ease-tactile);
   box-shadow: 
-    0 10px 20px -5px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    0 10px 20px -5px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   user-select: none;
   touch-action: manipulation;
 }
 
-.tactile-key::after {
+.tactile-key::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 155, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .tactile-key:hover {
   transform: translateY(-2px);
-  border-color: rgba(0, 242, 254, 0.4);
+  border-color: var(--border-zed);
   box-shadow: 
-    0 15px 30px -5px var(--cyan-glow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 16px 32px -8px var(--zed-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.tactile-key:hover::before {
+  opacity: 1;
 }
 
 .tactile-key:active {
   transform: translateY(2px);
   border-bottom-width: 1px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+}
+
+.tactile-key-selected {
+  border-color: var(--zed-green) !important;
+  background: linear-gradient(180deg, #131E24 0%, #0E161B 100%) !important;
+  box-shadow: 
+    0 0 30px var(--zed-glow),
+    inset 0 1px 0 rgba(0, 245, 155, 0.4) !important;
 }
 
 .tactile-key-urgent {
-  background: linear-gradient(180deg, #2D111A 0%, #170A0F 100%);
-  border-color: rgba(255, 51, 102, 0.35);
+  background: linear-gradient(180deg, #260D15 0%, #15070C 100%);
+  border-color: rgba(255, 46, 99, 0.3);
 }
 
 .tactile-key-urgent:hover {
   border-color: var(--coral-urgent);
-  box-shadow: 0 15px 30px -5px var(--coral-glow);
+  box-shadow: 0 16px 32px -8px var(--coral-glow);
 }
 
-/* Glowing Minimal Badges */
-.pill-tinker {
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34D399;
+.tactile-key-urgent.tactile-key-selected {
+  border-color: var(--coral-urgent) !important;
+  box-shadow: 0 0 30px var(--coral-glow) !important;
+}
+
+/* Zed Green Badges & Pills */
+.pill-zed {
+  background: var(--zed-bg-tint);
+  border: 1px solid var(--border-zed);
+  color: var(--zed-green);
   font-family: var(--font-mono);
   font-size: 11px;
+  font-weight: 700;
   padding: 4px 10px;
   border-radius: 9999px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 15px rgba(0, 245, 155, 0.12);
 }
 
 .pill-baseline {
@@ -165,16 +215,79 @@ body::after {
   font-size: 11px;
   padding: 4px 10px;
   border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-/* Live Audio Frequency Visualizer */
-.audio-spectrum-canvas {
-  width: 100%;
-  height: 48px;
-  display: block;
+/* Zed Button Primary */
+.btn-zed {
+  background: var(--zed-green);
+  color: #07090D;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 12px;
+  padding: 12px 22px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s var(--ease-spring);
+  box-shadow: 0 8px 24px -6px var(--zed-glow-intense);
 }
 
-/* Animated Horizon Gauge Bar */
+.btn-zed:hover {
+  background: var(--zed-green-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -4px var(--zed-glow-intense);
+}
+
+.btn-zed:active {
+  transform: translateY(1px);
+}
+
+/* Zed Secondary / Outline Button */
+.btn-zed-ghost {
+  background: rgba(255, 255, 255, 0.03);
+  color: #F1F5F9;
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-zed-ghost:hover {
+  background: var(--zed-bg-tint);
+  border-color: var(--border-zed);
+  color: var(--zed-green);
+}
+
+/* Glowing Pulsing Status LED */
+.led-zed {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--zed-green);
+  box-shadow: 0 0 12px var(--zed-green);
+  animation: zedPulse 1.8s infinite;
+}
+
+@keyframes zedPulse {
+  0%, 100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+  50% { opacity: 0.6; transform: scale(0.85); filter: brightness(1.4); }
+}
+
+/* Horizon Progress Bars */
 .horizon-track {
   height: 6px;
   background: rgba(255, 255, 255, 0.05);
@@ -183,23 +296,23 @@ body::after {
   overflow: hidden;
 }
 
-.horizon-bar-tinker {
+.horizon-bar-zed {
   height: 100%;
-  background: linear-gradient(90deg, #00F2FE, #10B981);
+  background: linear-gradient(90deg, #10B981, #00F59B);
   border-radius: 9999px;
-  box-shadow: 0 0 15px var(--cyan-glow);
-  transition: width 0.35s var(--ease-spring);
+  box-shadow: 0 0 18px var(--zed-glow-intense);
+  transition: width 0.4s var(--ease-spring);
 }
 
 .horizon-bar-baseline {
   height: 100%;
   background: #F59E0B;
   border-radius: 9999px;
-  opacity: 0.6;
+  opacity: 0.7;
   transition: width 1.2s ease-out;
 }
 
-/* Spline 3D Container */
+/* Spline 3D Wrapper */
 .spline-wrapper {
   position: relative;
   width: 100%;
@@ -209,19 +322,11 @@ body::after {
   justify-content: center;
 }
 
-/* Pulse Dot */
-.led-emerald {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: var(--emerald-tinker);
-  box-shadow: 0 0 10px var(--emerald-tinker);
-  animation: ledPulse 2s infinite;
-}
-
-@keyframes ledPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
+/* Audio Spectrogram Canvas */
+.audio-spectrogram-canvas {
+  width: 100%;
+  height: 52px;
+  display: block;
 }
 
 /* Custom Scrollbar */
@@ -232,6 +337,10 @@ body::after {
   background: var(--bg-deep);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1A2234;
+  background: #141B26;
   border-radius: 3px;
+  border: 1px solid rgba(0, 245, 155, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--zed-emerald-dark);
 }

@@ -112,17 +112,16 @@ npm run dev
 
 ---
 
-## 🎨 Production Interface Gallery (Next.js + Vanilla CSS + Spline 3D)
+## 🎨 SSS-Tier Production Interface Gallery (Zed Green Edition)
 
-AphasiaBridge features an obsidian dark-mode interface with VisionOS/Linear aesthetics, interactive Spline 3D neural visualizers, and zero visual clutter:
+AphasiaBridge features an ultra-luxury obsidian and phosphor Zed Green dark-mode design inspired by high-end developer instruments, featuring interactive Spline 3D neural avatars, real-time audio spectrograms, and mechanical soundboard feedback:
 
 | View | Screenshot | Description |
 | :--- | :--- | :--- |
-| **Spline 3D Neural Hero** | ![Hero](next-app/public/images/hero_section.png) | 3D interactive avatar visualizer rendering neural intent state in real-time |
-| **Dual-Engine Latency Horizon** | ![Latency Horizon](next-app/public/images/latency_horizon.png) | 174ms Tinker LoRA direct decoding vs 1,473ms slow baseline lecture |
-| **Tactile AAC Sound Matrix** | ![Switchboard](next-app/public/images/switchboard_decoded.png) | High-contrast 1-touch keys for motor-impaired patient agency |
-| **Empirical Telemetry Curve** | ![Telemetry](next-app/public/images/telemetry_curve.png) | Verified loss convergence from 2.45 to 0.44 across 5 training epochs |
-| **Tariq's Voice Story Drawer** | ![Story Drawer](next-app/public/images/drawer_open.png) | Centered glassmorphic modal honoring Tariq's journey |
+| **Zed Green 3D Neural Hero** | ![Hero](next-app/public/images/hero_section_zed_green.png) | 3D interactive avatar visualizer rendering neural intent state in real-time with responsive mouse-follow lattice |
+| **Live Decoding Race & Audio Spectrogram** | ![Latency Horizon](next-app/public/images/live_decoding_race_zed_green.png) | Real-time race benchmark (174ms vs 1,390ms) with dancing 44.1kHz Zed Green audio spectrum visualizer |
+| **Tactile AAC Sound Matrix** | ![Switchboard](next-app/public/images/tactile_sound_matrix_zed_green.png) | 3D mechanical-feel keycaps with [1]-[9] keyboard shortcuts and interactive patient shorthand terminal |
+| **Empirical Convergence Telemetry** | ![Telemetry](next-app/public/images/telemetry_curve_zed_green.png) | Verified 5-epoch loss convergence from 2.45 to 0.44 with interactive epoch inspector in Zed Green |
 
 ---
 
