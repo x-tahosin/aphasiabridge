@@ -7,6 +7,7 @@
 [![Base Model](https://img.shields.io/badge/Base%20Model-Google%20Gemma--2B-cyan.svg)](https://huggingface.co/google/gemma-2b-it)
 [![Fine-Tuned With](https://img.shields.io/badge/Fine--Tuned%20With-Thinking%20Machines%20Tinker-emerald.svg)](https://thinkingmachines.ai)
 [![Voice Restoration](https://img.shields.io/badge/Voice%20Synthesis-ElevenLabs-purple.svg)](https://elevenlabs.io)
+[![CI](https://github.com/x-tahosin/aphasiabridge/actions/workflows/ci.yml/badge.svg)](https://github.com/x-tahosin/aphasiabridge/actions)
 [![Offline Status](https://img.shields.io/badge/Offline%20Inference-100%25%20Air--Gapped-green.svg)]()
 
 ---
@@ -133,5 +134,48 @@ AphasiaBridge features an ultra-luxury obsidian and phosphor Zed Green dark-mode
 
 ---
 
+## 📂 Repository Structure
+
+```text
+aphasiabridge/
+├── .github/workflows/         # Automated GitHub Actions CI/CD workflows
+│   └── ci.yml                 # Next.js build & Python pipeline verification
+├── next-app/                  # SSS-Tier Next.js 16 + React 19 assistive console
+│   ├── app/                   # App Router pages and dynamic API routes
+│   │   ├── api/translate/     # Air-gapped Tinker LoRA offline inference endpoint
+│   │   ├── api/tts/           # ElevenLabs vocal restoration endpoint (with fallback)
+│   │   ├── api/benchmark/     # Live empirical race benchmark runner
+│   │   ├── components/        # Spline 3D robot, Spectrogram, Sound Matrix, etc.
+│   │   ├── layout.jsx         # Root layout with suppressHydrationWarning
+│   │   └── page.jsx           # Main assistive instrument dashboard
+│   ├── public/images/         # Ultra-luxury UI screenshots and clinical assets
+│   └── package.json           # Dependencies and scripts
+├── tinker/                    # Thinking Machines' Tinker fine-tuning pipeline
+│   ├── train_tinker.py        # Forward/backward training loop & LoRA optimizer
+│   ├── evaluate_benchmark.py  # Empirical evaluation across 25 held-out scenarios
+│   ├── dataset.py             # Aphasia shorthand to first-person speech tokenizer
+│   └── aphasia_dataset.json   # 25 clinically categorized medical shorthand pairs
+├── articles/                  # Official Hackathon submission documentation
+│   └── aphasiabridge_devto_submission.md # Complete Dev.to write-up & deep-dive
+├── server.py                  # Standalone FastAPI Python backend (optional)
+├── LICENSE                    # Permissive MIT License (c) 2026 Tahosin
+└── README.md                  # Comprehensive project documentation
+```
+
+---
+
+## 👥 Authors & Acknowledgments
+
+- **Creator & Lead Engineer:** [Tahosin (@x-tahosin)](https://github.com/x-tahosin)
+- **Built for:** Tariq (Stroke survivor & software engineer)
+- **Special Thanks:**
+  - **Thinking Machines Lab** for open-weight Tinker fine-tuning primitives.
+  - **Google DeepMind** for the Gemma-2B open-weight foundation model.
+  - **ElevenLabs** for vocal resonance recovery.
+  - **DEV Community & GitHub** for hosting Hacktoberfest 2026.
+
+---
+
 ## 📄 License
-Released under the permissive [MIT License](LICENSE). Built for friends, patients, and caregivers worldwide.
+Released under the permissive [MIT License](LICENSE). Copyright (c) 2026 Tahosin ([@x-tahosin](https://github.com/x-tahosin)). Built for friends, patients, and caregivers worldwide.
+
