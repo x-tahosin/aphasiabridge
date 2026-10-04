@@ -10,56 +10,56 @@ export default function AudioSpectrogram({ isPlaying }) {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let animationId;
+    let isMounted = true;
 
     let width = (canvas.width = canvas.offsetWidth * 2);
     let height = (canvas.height = canvas.offsetHeight * 2);
+
+    // Cached gradient
+    let grad = ctx.createLinearGradient(0, 0, 0, height);
+    grad.addColorStop(0, '#00F59B');
+    grad.addColorStop(0.5, '#10B981');
+    grad.addColorStop(1, '#059669');
 
     const handleResize = () => {
       if (!canvas) return;
       width = canvas.width = canvas.offsetWidth * 2;
       height = canvas.height = canvas.offsetHeight * 2;
+      grad = ctx.createLinearGradient(0, 0, 0, height);
+      grad.addColorStop(0, '#00F59B');
+      grad.addColorStop(0.5, '#10B981');
+      grad.addColorStop(1, '#059669');
+      drawFrame(0);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
-    const numBars = 48;
+    const numBars = 40;
     let step = 0;
 
-    const render = () => {
+    const drawFrame = (currentStep) => {
       ctx.clearRect(0, 0, width, height);
-      step += isPlaying ? 0.08 : 0.02;
+      ctx.fillStyle = grad;
 
       const barWidth = (width / numBars) * 0.65;
       const gap = (width / numBars) * 0.35;
 
       for (let i = 0; i < numBars; i++) {
-        // Multi-frequency wave formula
-        const freq1 = Math.sin(step * 2 + i * 0.25);
-        const freq2 = Math.cos(step * 3.5 - i * 0.15);
-        const freq3 = Math.sin(step * 5 + i * 0.4);
-
         let amplitude;
         if (isPlaying) {
+          const freq1 = Math.sin(currentStep * 2 + i * 0.25);
+          const freq2 = Math.cos(currentStep * 3.5 - i * 0.15);
+          const freq3 = Math.sin(currentStep * 5 + i * 0.4);
           amplitude = Math.abs(freq1 * 0.5 + freq2 * 0.3 + freq3 * 0.2);
-          amplitude = Math.max(0.15, amplitude);
+          amplitude = Math.max(0.18, amplitude);
         } else {
-          amplitude = 0.08 + Math.sin(step + i * 0.2) * 0.04;
+          // Subtle, calm resting baseline
+          amplitude = 0.08 + Math.sin(i * 0.28) * 0.035;
         }
 
         const barHeight = amplitude * (height * 0.75);
         const x = i * (barWidth + gap) + gap;
         const y = height / 2 - barHeight / 2;
 
-        // Zed Green Gradient
-        const grad = ctx.createLinearGradient(0, y, 0, y + barHeight);
-        grad.addColorStop(0, '#00F59B');
-        grad.addColorStop(0.5, '#10B981');
-        grad.addColorStop(1, '#059669');
-
-        ctx.fillStyle = grad;
-        ctx.shadowColor = isPlaying ? '#00F59B' : 'transparent';
-        ctx.shadowBlur = isPlaying ? 8 : 0;
-
-        // Rounded bar
         ctx.beginPath();
         if (ctx.roundRect) {
           ctx.roundRect(x, y, barWidth, Math.max(4, barHeight), 4);
@@ -68,14 +68,24 @@ export default function AudioSpectrogram({ isPlaying }) {
         }
         ctx.fill();
       }
-
-      animationId = requestAnimationFrame(render);
     };
 
-    render();
+    if (isPlaying) {
+      const render = () => {
+        if (!isMounted) return;
+        step += 0.08;
+        drawFrame(step);
+        animationId = requestAnimationFrame(render);
+      };
+      animationId = requestAnimationFrame(render);
+    } else {
+      // Idle resting state: draw static ambient frame once! 0% CPU consumption
+      drawFrame(0);
+    }
 
     return () => {
-      cancelAnimationFrame(animationId);
+      isMounted = false;
+      if (animationId) cancelAnimationFrame(animationId);
       window.removeEventListener('resize', handleResize);
     };
   }, [isPlaying]);
@@ -89,7 +99,8 @@ export default function AudioSpectrogram({ isPlaying }) {
       padding: '12px 16px',
       display: 'flex',
       flexDirection: 'column',
-      gap: '8px'
+      gap: '8px',
+      contain: 'content'
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -105,7 +116,12 @@ export default function AudioSpectrogram({ isPlaying }) {
 
       <canvas
         ref={canvasRef}
-        style={{ width: '100%', height: '42px', display: 'block' }}
+        style={{
+          width: '100%',
+          height: '42px',
+          display: 'block',
+          filter: isPlaying ? 'drop-shadow(0 0 8px rgba(0, 245, 155, 0.35))' : 'none'
+        }}
       />
     </div>
   );

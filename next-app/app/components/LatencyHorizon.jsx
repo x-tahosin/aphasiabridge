@@ -22,7 +22,7 @@ export default function LatencyHorizon({ result, onPlay, isPlaying }) {
     }
   }, [result?.input_shorthand, result?.tinker_latency_ms]);
 
-  // Trigger interactive live benchmark race
+  // Trigger interactive live benchmark race with RAF synchronization
   const runLiveRace = () => {
     if (isRacing) return;
     setIsRacing(true);
@@ -35,7 +35,8 @@ export default function LatencyHorizon({ result, onPlay, isPlaying }) {
     const targetTinker = result?.tinker_latency_ms || 174;
     const targetBaseline = result?.baseline_latency_ms || 1390;
 
-    const interval = setInterval(() => {
+    let rafId;
+    const tick = () => {
       const elapsed = Math.round(performance.now() - startTime);
 
       if (elapsed <= targetTinker) {
@@ -47,13 +48,15 @@ export default function LatencyHorizon({ result, onPlay, isPlaying }) {
 
       if (elapsed <= targetBaseline) {
         setBaselineTimer(elapsed);
+        rafId = requestAnimationFrame(tick);
       } else {
         setBaselineTimer(targetBaseline);
         setBaselineDone(true);
         setIsRacing(false);
-        clearInterval(interval);
       }
-    }, 16);
+    };
+
+    rafId = requestAnimationFrame(tick);
   };
 
   if (!result) return null;
