@@ -11,6 +11,10 @@
 [![CI](https://github.com/x-tahosin/aphasiabridge/actions/workflows/ci.yml/badge.svg)](https://github.com/x-tahosin/aphasiabridge/actions)
 [![Offline Status](https://img.shields.io/badge/Offline%20Inference-100%25%20Air--Gapped-green.svg)]()
 
+<p align="center">
+  <img src="next-app/public/images/hero_hq.png" alt="AphasiaBridge Hero Dashboard" width="100%">
+</p>
+
 ---
 
 ## 🌟 The Prompt: Build for a Friend
@@ -120,10 +124,11 @@ AphasiaBridge features an ultra-luxury obsidian and phosphor Zed Green dark-mode
 
 | View | Screenshot | Description |
 | :--- | :--- | :--- |
-| **Zed Green 3D Neural Hero** | ![Hero](next-app/public/images/hero_section_zed_green.png) | 3D interactive avatar visualizer rendering neural intent state in real-time with responsive mouse-follow lattice |
-| **Live Decoding Race & Audio Spectrogram** | ![Latency Horizon](next-app/public/images/live_decoding_race_zed_green.png) | Real-time race benchmark (174ms vs 1,390ms) with dancing 44.1kHz Zed Green audio spectrum visualizer |
-| **Tactile AAC Sound Matrix** | ![Switchboard](next-app/public/images/tactile_sound_matrix_zed_green.png) | 3D mechanical-feel keycaps with [1]-[9] keyboard shortcuts and interactive patient shorthand terminal |
-| **Empirical Convergence Telemetry** | ![Telemetry](next-app/public/images/telemetry_curve_zed_green.png) | Verified 5-epoch loss convergence from 2.45 to 0.44 with interactive epoch inspector in Zed Green |
+| **Tactile 3D Neural Instrument** | ![Hero](next-app/public/images/hero_hq.png) | 3D interactive avatar visualizer rendering neural intent state in real-time with responsive mouse-follow lattice |
+| **Live Decoding Race & Audio Spectrogram** | ![Latency Horizon](next-app/public/images/live_race_hq.png) | Real-time race benchmark (174ms vs 1,390ms) with dancing 44.1kHz audio spectrum visualizer |
+| **Tactile AAC Sound Matrix** | ![Switchboard](next-app/public/images/tactile_matrix_hq.png) | Mechanical-feel keycaps with [1]-[9] keyboard shortcuts and interactive patient shorthand terminal |
+| **Empirical Convergence Telemetry** | ![Telemetry](next-app/public/images/telemetry_curve_hq.png) | Verified 5-epoch loss convergence from 2.45 to 0.44 with fine-tuning loss curve |
+| **Clinical Caregiver Alert Feed** | ![Caregiver Feed](next-app/public/images/caregiver_feed_hq.png) | Real-time clinical telemetry stream with urgency badges, bedside chime triggers, and nurse acknowledgment |
 
 ---
 
