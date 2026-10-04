@@ -265,28 +265,11 @@ Tariq grabbed my shoulder, pulled me into a fierce one-armed hug, and typed into
 
 ## Prize Categories
 
-I am submitting AphasiaBridge for consideration in the following categories for the Hacktoberfest Weekend Challenge:
+I am submitting AphasiaBridge for the following categories:
 
-### 1. Thinking Machines' Tinker ($200 USD Featured Prize)
-
-Thinking Machines' Tinker API was the indispensable core of this project. Off-the-shelf open-weight models and commercial APIs completely fail motor-impaired aphasia patients because their default RLHF conditioning generates conversational fluff and unsolicited medical advice.
-
-Using Tinker's low-level `forward_backward` gradient accumulation and `optim_step` optimization primitives, we adapted Google Gemma-2B with LoRA (rank 8, alpha 16) across our clinically curated dataset. The results meet and exceed the challenge rubric:
-* **8.4x Latency Reduction:** Brought mean decoding latency down from 1,473.6ms to **174.4ms**, achieving true conversational turn-taking speed.
-* **+54.8% Intent Accuracy Improvement:** Boosted intent fidelity from 43.6% to **98.4%** across $N = 25$ held-out medical scenarios.
-* **100% Elimination of Hallucinated Filler:** Dropped third-person conversational boilerplate from 16.0% down to **0.0%**.
-
-### 2. Best Use of ElevenLabs ($100 USD Partner Prize)
-
-We integrated ElevenLabs not as a decorative TTS feature, but as a critical psychological instrument of vocal identity. Synthetic assistive voices typically sound robotic and emotionless, reinforcing the trauma of loss.
-
-By training a custom voice clone on pre-accident home videos of Tariq, ElevenLabs restored his authentic pitch, cadence, and warmth. Hearing his own voice comfort his mother in the clinic showed that voice cloning in assistive medicine is not a convenience; it is the restoration of human dignity.
-
-### 3. Build for a Friend (Grand Prize / Overall Challenge Winner)
-
-AphasiaBridge was engineered from day one for a real friend, Tariq, to solve the immediate, harrowing reality of expressive speech loss following a catastrophic trauma.
-
-With a fully deployed live web application on GitHub Pages, 100% open-source MIT code, air-gapped privacy architecture, and zero-barrier touch targets, AphasiaBridge demonstrates how software built for a single friend can become a scalable lifeline for stroke survivors worldwide.
+* **Thinking Machines' Tinker ($200 USD Featured Prize):** Fine-tuned open-weight Gemma-2B using Tinker's `forward_backward` and `optim_step` primitives to eliminate chatbot conversational disclaimers (0.0% hallucination) and deliver 174ms real-time bedside decoding (8.4x faster than baseline).
+* **Best Use of ElevenLabs ($100 USD Partner Prize):** Integrated custom voice cloning trained on pre-accident home videos so Tariq communicates in his authentic vocal timbre and cadence instead of a generic robot voice.
+* **Build for a Friend (Grand Prize):** Engineered from scratch for my close friend Tariq following his traumatic brain injury to bridge expressive aphasia into first-person vocal agency, fully deployed as an open-source, air-gapped web instrument.
 
 ---
 
