@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  devIndicators: false,
-  eslint: {
-    ignoreDuringBuilds: true,
+  output: 'export',
+  basePath: '/aphasiabridge',
+  images: {
+    unoptimized: true,
   },
+  devIndicators: false,
   typescript: {
     ignoreBuildErrors: true,
   },

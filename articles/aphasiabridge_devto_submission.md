@@ -239,6 +239,7 @@ Tariq grabbed my shoulder, pulled me into a fierce one-armed hug, and typed into
 
 AphasiaBridge is completely open-source under the permissive MIT License. You can clone the repository, test the fine-tuning pipeline, or run the Next.js assistive console locally:
 
+- **Live Interactive Demo:** [https://x-tahosin.github.io/aphasiabridge/](https://x-tahosin.github.io/aphasiabridge/)
 - **GitHub Repository:** [https://github.com/x-tahosin/aphasiabridge](https://github.com/x-tahosin/aphasiabridge)
 - **Base Model:** Google Gemma-2B
 - **Fine-Tuning Primitives:** Thinking Machines' Tinker API

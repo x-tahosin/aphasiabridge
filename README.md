@@ -4,6 +4,7 @@
 > *A submission for the [Hacktoberfest Weekend Challenge: Build for a Friend](https://dev.to/challenges/hacktoberfest-weekend-2026-10-01)*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-emerald.svg)](https://x-tahosin.github.io/aphasiabridge/)
 [![Base Model](https://img.shields.io/badge/Base%20Model-Google%20Gemma--2B-cyan.svg)](https://huggingface.co/google/gemma-2b-it)
 [![Fine-Tuned With](https://img.shields.io/badge/Fine--Tuned%20With-Thinking%20Machines%20Tinker-emerald.svg)](https://thinkingmachines.ai)
 [![Voice Restoration](https://img.shields.io/badge/Voice%20Synthesis-ElevenLabs-purple.svg)](https://elevenlabs.io)
