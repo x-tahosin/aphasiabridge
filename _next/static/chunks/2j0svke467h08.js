@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,44897,t=>{"use strict";var e=t.i(64693);t.i(86609),t.s([],75276),t.i(75276),t.s(["updateDocumentSchema",()=>e.Ua],44897)}]);

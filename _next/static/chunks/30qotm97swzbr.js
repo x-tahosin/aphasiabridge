@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,63643,i=>{i.q("/aphasiabridge/_next/static/media/hana-ui.3i5-uds_t7dli.wasm")}]);
