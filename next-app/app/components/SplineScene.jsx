@@ -4,29 +4,20 @@ import React, { useEffect, useRef, useState } from 'react';
 
 export default function SplineScene({ isSpeaking, urgency }) {
   const canvasRef = useRef(null);
+  const splineCanvasRef = useRef(null);
   const splineContainerRef = useRef(null);
   const [splineLoaded, setSplineLoaded] = useState(false);
   const mousePos = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
   const isVisibleRef = useRef(true);
-  const splineAppRef = useRef(null);
 
-  // 1. Visibility tracking: Pause WebGL and 2D canvas when scrolled out of view
+  // 1. Visibility tracking: Pause 2D canvas when scrolled out of view
   useEffect(() => {
     const container = splineContainerRef.current;
     if (!container) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const visible = entry.isIntersecting;
-        isVisibleRef.current = visible;
-        const app = splineAppRef.current;
-        if (app) {
-          if (!visible && typeof app.stop === 'function') {
-            app.stop();
-          } else if (visible && typeof app.play === 'function') {
-            app.play();
-          }
-        }
+        isVisibleRef.current = entry.isIntersecting;
       },
       { threshold: 0.05 }
     );
@@ -95,7 +86,6 @@ export default function SplineScene({ isSpeaking, urgency }) {
     const render = () => {
       if (isCancelled) return;
 
-      // Only draw when section is visible in the viewport
       if (isVisibleRef.current) {
         ctx.clearRect(0, 0, width, height);
         time += isSpeaking ? 0.045 : 0.016;
@@ -202,58 +192,42 @@ export default function SplineScene({ isSpeaking, urgency }) {
     };
   }, [isSpeaking, urgency]);
 
-  // 3. Load interactive Spline robot with GPU isolation
+  // 3. Load interactive Spline robot - Declarative, single instance, zero glitch
   useEffect(() => {
     let appInstance = null;
-    let isCancelled = false;
+    let isDisposed = false;
 
     async function loadSpline() {
       try {
+        const canvas = splineCanvasRef.current;
         const container = splineContainerRef.current;
-        if (!container) return;
+        if (!canvas || !container) return;
 
-        // Clean any old canvas
-        const existing = container.querySelector('.spline-runtime-canvas');
-        if (existing) existing.remove();
-
+        // Set dimensions explicitly before initializing WebGL
         const rect = container.getBoundingClientRect();
-        const width = rect.width || 800;
-        const height = rect.height || 380;
+        canvas.width = rect.width || 800;
+        canvas.height = rect.height || 380;
 
         const { Application } = await import('@splinetool/runtime');
-        const splineCanvas = document.createElement('canvas');
-        splineCanvas.className = 'spline-runtime-canvas';
-        splineCanvas.width = width;
-        splineCanvas.height = height;
-        splineCanvas.style.width = '100%';
-        splineCanvas.style.height = '100%';
-        splineCanvas.style.position = 'absolute';
-        splineCanvas.style.inset = '0';
-        splineCanvas.style.pointerEvents = 'none';
-        splineCanvas.style.transform = 'translateZ(0)';
+        if (isDisposed) return;
 
-        container.appendChild(splineCanvas);
-        const app = new Application(splineCanvas);
+        const app = new Application(canvas);
+        appInstance = app;
+
         await app.load('https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode');
-        if (!isCancelled) {
-          appInstance = app;
-          splineAppRef.current = app;
+
+        if (!isDisposed) {
           setSplineLoaded(true);
-          // If not currently visible when loaded, pause
-          if (!isVisibleRef.current && typeof app.stop === 'function') {
-            app.stop();
-          }
         }
       } catch (err) {
-        setSplineLoaded(false);
+        console.error('Spline load error:', err);
       }
     }
 
     loadSpline();
 
     return () => {
-      isCancelled = true;
-      splineAppRef.current = null;
+      isDisposed = true;
       if (appInstance && typeof appInstance.dispose === 'function') {
         appInstance.dispose();
       }
@@ -262,7 +236,7 @@ export default function SplineScene({ isSpeaking, urgency }) {
 
   return (
     <div className="spline-wrapper" ref={splineContainerRef}>
-      {/* Interactive 3D Neural Sound Canvas in Zed Green */}
+      {/* 2D Neural Resonance Field in Zed Green (Steady opacity, zero flash) */}
       <canvas
         ref={canvasRef}
         style={{
@@ -270,11 +244,26 @@ export default function SplineScene({ isSpeaking, urgency }) {
           height: '100%',
           position: 'absolute',
           inset: 0,
-          opacity: splineLoaded ? 0.35 : 1,
-          transition: 'opacity 0.6s ease',
+          opacity: 0.38,
           pointerEvents: 'none',
           transform: 'translateZ(0)',
           willChange: 'transform'
+        }}
+      />
+
+      {/* 3D Spline Robot Canvas - Direct React Element (Single Instance Guaranteed) */}
+      <canvas
+        ref={splineCanvasRef}
+        className="spline-runtime-canvas"
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          transform: 'translateZ(0)',
+          opacity: splineLoaded ? 1 : 0,
+          transition: 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
         }}
       />
     </div>
