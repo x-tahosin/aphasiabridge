@@ -1,11 +1,33 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Send, Sparkles, Terminal, CornerDownLeft } from './Icons';
+import { Send, Sparkles, Terminal, CornerDownLeft, Plus } from './Icons';
+import AddShortcutModal from './AddShortcutModal';
 
-export default function TactileConsole({ dataset, onSelect, activeShorthand, onCustomSubmit }) {
+export default function TactileConsole({ dataset, onSelect, activeShorthand, onCustomSubmit, isDecoding }) {
   const [filter, setFilter] = useState('ALL');
   const [customText, setCustomText] = useState('');
+  const [customKeys, setCustomKeys] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Load custom keys from localStorage on mount
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('aphasiabridge_custom_keys');
+      if (stored) {
+        setCustomKeys(JSON.parse(stored));
+      }
+    } catch (e) {}
+  }, []);
+
+  const handleAddCustomKey = (newKey) => {
+    const updated = [newKey, ...customKeys];
+    setCustomKeys(updated);
+    try {
+      localStorage.setItem('aphasiabridge_custom_keys', JSON.stringify(updated));
+    } catch (e) {}
+    onSelect(newKey);
+  };
 
   // Subtle Web Audio Mechanical Switch Sound
   const playMechanicalClick = () => {
@@ -37,9 +59,12 @@ export default function TactileConsole({ dataset, onSelect, activeShorthand, onC
     { id: 'AUTONOMY_CHOICE', label: '🧠 Agency' },
   ];
 
+  // Combine default dataset with custom patient keys
+  const allKeys = [...customKeys, ...dataset];
+
   const items = filter === 'ALL' 
-    ? dataset 
-    : dataset.filter(d => d.category === filter);
+    ? allKeys 
+    : allKeys.filter(d => d.category === filter);
 
   const handleKeyClick = (item) => {
     playMechanicalClick();
@@ -49,7 +74,6 @@ export default function TactileConsole({ dataset, onSelect, activeShorthand, onC
   // Keyboard shortcut listener for keys 1-9
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // If typing in input, don't hijack numbers
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
       const num = parseInt(e.key, 10);
@@ -71,33 +95,58 @@ export default function TactileConsole({ dataset, onSelect, activeShorthand, onC
   return (
     <div style={{ marginTop: '24px' }}>
       
-      {/* Category Filter Bar */}
-      <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '16px', scrollbarWidth: 'none' }}>
-        {domains.map(d => (
-          <button
-            key={d.id}
-            onClick={() => {
-              playMechanicalClick();
-              setFilter(d.id);
-            }}
-            style={{
-              padding: '8px 16px',
-              borderRadius: '9999px',
-              border: filter === d.id ? '1px solid var(--zed-green)' : '1px solid rgba(255,255,255,0.08)',
-              background: filter === d.id ? 'var(--zed-bg-tint)' : 'rgba(255,255,255,0.02)',
-              color: filter === d.id ? 'var(--zed-green)' : '#94A3B8',
-              fontSize: '12px',
-              fontWeight: '700',
-              fontFamily: 'var(--font-mono)',
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.18s ease',
-              boxShadow: filter === d.id ? '0 0 16px var(--zed-glow)' : 'none'
-            }}
-          >
-            {d.label}
-          </button>
-        ))}
+      {/* Category Filter Bar with + Add Key Button */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap', paddingBottom: '16px' }}>
+        <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+          {domains.map(d => (
+            <button
+              key={d.id}
+              onClick={() => {
+                playMechanicalClick();
+                setFilter(d.id);
+              }}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '9999px',
+                border: filter === d.id ? '1px solid var(--zed-green)' : '1px solid rgba(255,255,255,0.08)',
+                background: filter === d.id ? 'var(--zed-bg-tint)' : 'rgba(255,255,255,0.02)',
+                color: filter === d.id ? 'var(--zed-green)' : '#94A3B8',
+                fontSize: '12px',
+                fontWeight: '700',
+                fontFamily: 'var(--font-mono)',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.18s ease',
+                boxShadow: filter === d.id ? '0 0 16px var(--zed-glow)' : 'none'
+              }}
+            >
+              {d.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Add Bedside Key button */}
+        <button
+          onClick={() => setIsModalOpen(true)}
+          style={{
+            padding: '8px 14px',
+            borderRadius: '9999px',
+            border: '1px solid rgba(0, 245, 155, 0.4)',
+            background: 'rgba(0, 245, 155, 0.08)',
+            color: 'var(--zed-green)',
+            fontSize: '11px',
+            fontWeight: '700',
+            fontFamily: 'var(--font-mono)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            transition: 'all 0.2s ease'
+          }}
+        >
+          <span style={{ fontSize: '14px', lineHeight: 1 }}>+</span>
+          <span>Add Custom Key</span>
+        </button>
       </div>
 
       {/* Tactile Keycap Grid */}
@@ -259,14 +308,22 @@ export default function TactileConsole({ dataset, onSelect, activeShorthand, onC
                 setCustomText('');
               }
             }}
+            disabled={isDecoding}
             className="btn-zed"
-            style={{ padding: '12px 20px', borderRadius: '10px' }}
+            style={{ padding: '12px 20px', borderRadius: '10px', opacity: isDecoding ? 0.7 : 1 }}
           >
             <Send size={13} />
-            <span>Decode</span>
+            <span>{isDecoding ? 'Decoding...' : 'Decode'}</span>
           </button>
         </div>
       </div>
+
+      {/* Add Custom Key Modal */}
+      <AddShortcutModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAdd={handleAddCustomKey}
+      />
 
     </div>
   );

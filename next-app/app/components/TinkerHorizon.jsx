@@ -1,10 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Cpu, Zap, TrendingUp, Shield as ShieldCheck, ArrowUpRight } from './Icons';
+import { Cpu, Zap, TrendingUp, Shield as ShieldCheck, ArrowUpRight, Play } from './Icons';
+import BenchmarkRunnerModal from './BenchmarkRunnerModal';
+import dataset from '../../src/data/dataset.json';
 
 export default function TinkerHorizon({ benchmarkData }) {
   const [activeEpoch, setActiveEpoch] = useState(4); // Default to epoch 5 (converged)
+  const [isBenchmarkModalOpen, setIsBenchmarkModalOpen] = useState(false);
 
   const epochs = [
     { epoch: 1, step: 1, loss: 2.4536, ppl: 11.63, x: 0, y: 15 },
@@ -31,7 +34,16 @@ export default function TinkerHorizon({ benchmarkData }) {
           </h3>
         </div>
 
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => setIsBenchmarkModalOpen(true)}
+            className="btn-zed"
+            style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '11px', gap: '6px' }}
+          >
+            <Play size={11} fill="#07090D" />
+            <span>Run 25-Case Clinical Benchmark</span>
+          </button>
+
           <span className="pill-zed">
             LoRA Rank 8 &bull; Alpha 16
           </span>
@@ -200,6 +212,13 @@ export default function TinkerHorizon({ benchmarkData }) {
           ))}
         </div>
       </div>
+
+      {/* 25-Case Clinical Benchmark Runner Modal */}
+      <BenchmarkRunnerModal
+        isOpen={isBenchmarkModalOpen}
+        onClose={() => setIsBenchmarkModalOpen(false)}
+        dataset={dataset}
+      />
 
     </div>
   );

@@ -11,6 +11,17 @@ export default function LatencyHorizon({ result, onPlay, isPlaying }) {
   const [tinkerDone, setTinkerDone] = useState(true);
   const [baselineDone, setBaselineDone] = useState(true);
 
+  // Synchronize timers when active result changes
+  useEffect(() => {
+    if (result) {
+      setTinkerTimer(result.tinker_latency_ms || 174);
+      setBaselineTimer(result.baseline_latency_ms || 1390);
+      setTinkerDone(true);
+      setBaselineDone(true);
+      setIsRacing(false);
+    }
+  }, [result?.input_shorthand, result?.tinker_latency_ms]);
+
   // Trigger interactive live benchmark race
   const runLiveRace = () => {
     if (isRacing) return;

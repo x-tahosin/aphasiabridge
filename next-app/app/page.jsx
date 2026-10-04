@@ -5,10 +5,11 @@ import SplineScene from './components/SplineScene';
 import LatencyHorizon from './components/LatencyHorizon';
 import TactileConsole from './components/TactileConsole';
 import TinkerHorizon from './components/TinkerHorizon';
+import CaregiverAlertFeed from './components/CaregiverAlertFeed';
 import StoryDrawer from './components/StoryDrawer';
 import { Volume2, VolumeX, Bell, Heart, Activity, Sparkles, Terminal } from './components/Icons';
 
-// Clinical dataset
+// Clinical dataset & baseline metrics
 import dataset from '../src/data/dataset.json';
 import benchmarkData from '../src/data/benchmark.json';
 
@@ -18,48 +19,169 @@ export default function Home() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isStoryOpen, setIsStoryOpen] = useState(false);
+  const [isDecoding, setIsDecoding] = useState(false);
+  const [chimeActive, setChimeActive] = useState(false);
 
-  // Web Audio API Emergency Chime
+  // Live Caregiver Alert Stream
+  const [alerts, setAlerts] = useState([
+    {
+      id: 1,
+      timestamp: '02:08:14 AM',
+      shorthand: 'catheter... pinch... check bag',
+      reconstructed: 'My catheter is pinching and burning uncomfortably. Could you please check the line and drain bag?',
+      category: 'URGENT_PAIN',
+      urgency: 'high',
+      acknowledged: true
+    },
+    {
+      id: 2,
+      timestamp: '02:14:32 AM',
+      shorthand: 'water... ice... throat burn',
+      reconstructed: 'My throat is dry and burning. Could I please have a small cup of ice water with a bendy straw?',
+      category: 'DAILY_NEEDS',
+      urgency: 'medium',
+      acknowledged: true
+    }
+  ]);
+
+  // Web Audio API Emergency Clinical Chime (880Hz -> 587Hz 2-tone nurse bell)
   const handleEmergencyChime = () => {
-    try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.5);
-      
-      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-      
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.5);
-    } catch (e) {}
+    setChimeActive(true);
+    setTimeout(() => setChimeActive(false), 800);
+
+    if (!isMuted) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Tone 1: A5 (880Hz)
+        const osc1 = audioCtx.createOscillator();
+        const gain1 = audioCtx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(880, audioCtx.currentTime);
+        gain1.gain.setValueAtTime(0.25, audioCtx.currentTime);
+        gain1.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        osc1.connect(gain1);
+        gain1.connect(audioCtx.destination);
+        osc1.start();
+        osc1.stop(audioCtx.currentTime + 0.35);
+
+        // Tone 2: D5 (587.33Hz)
+        setTimeout(() => {
+          const osc2 = audioCtx.createOscillator();
+          const gain2 = audioCtx.createGain();
+          osc2.type = 'sine';
+          osc2.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+          gain2.gain.setValueAtTime(0.28, audioCtx.currentTime);
+          gain2.gain.exponentialRampToValueAtTime(0.005, audioCtx.currentTime + 0.55);
+          osc2.connect(gain2);
+          gain2.connect(audioCtx.destination);
+          osc2.start();
+          osc2.stop(audioCtx.currentTime + 0.55);
+        }, 160);
+      } catch (e) {}
+    }
+
+    // Dispatch emergency event to Caregiver stream
+    const newAlert = {
+      id: Date.now(),
+      timestamp: new Date().toLocaleTimeString(),
+      shorthand: '🚨 EMERGENCY NURSE CHIME TRIGGERED',
+      reconstructed: 'Immediate bedside medical assistance summoned by patient Tariq (Bed 4).',
+      category: 'URGENT_PAIN',
+      urgency: 'critical',
+      acknowledged: false
+    };
+    setAlerts(prev => [newAlert, ...prev]);
   };
 
   const handleSelect = (item) => {
     setActiveItem(item);
     setActiveShorthand(item.shorthand);
-  };
 
-  const handleCustomSubmit = (text) => {
-    setActiveShorthand(text);
-    const match = dataset.find(d => d.shorthand.toLowerCase().includes(text.toLowerCase())) || {
-      shorthand: text,
-      category: 'DAILY_NEEDS',
-      urgency: 'medium',
-      reconstructed: `Could you please assist me with ${text}? I need your help right now.`,
-      baseline_output: `Hello! Regarding ${text}, as an AI model, please consult with your healthcare caregiver.`,
-      baseline_latency_ms: 1480,
-      tinker_latency_ms: 174
+    // If critical/high urgency, automatically dispatch nurse chime
+    if (item.urgency === 'critical' || item.urgency === 'high') {
+      handleEmergencyChime();
+    }
+
+    // Add to alert queue
+    const newAlert = {
+      id: Date.now(),
+      timestamp: new Date().toLocaleTimeString(),
+      shorthand: item.shorthand,
+      reconstructed: item.reconstructed,
+      category: item.category,
+      urgency: item.urgency,
+      acknowledged: false
     };
-    setActiveItem(match);
+    setAlerts(prev => [newAlert, ...prev]);
   };
 
-  const handlePlayVoice = (sentence) => {
+  // Real Clinical Translation using Next.js /api/translate
+  const handleCustomSubmit = async (text) => {
+    if (!text || !text.trim()) return;
+    setActiveShorthand(text.trim());
+    setIsDecoding(true);
+
+    try {
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ shorthand: text.trim() })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const updatedItem = {
+          shorthand: text.trim(),
+          category: data.detected_category,
+          urgency: data.urgency_level,
+          reconstructed: data.reconstructed,
+          baseline_output: data.baseline_output,
+          baseline_latency_ms: data.baseline_latency_ms,
+          tinker_latency_ms: data.tinker_latency_ms
+        };
+
+        setActiveItem(updatedItem);
+
+        // Sound chime if critical
+        if (data.urgency_level === 'critical' || data.urgency_level === 'high') {
+          handleEmergencyChime();
+        }
+
+        // Add to alert stream
+        const newAlert = {
+          id: Date.now(),
+          timestamp: new Date().toLocaleTimeString(),
+          shorthand: text.trim(),
+          reconstructed: data.reconstructed,
+          category: data.detected_category,
+          urgency: data.urgency_level,
+          acknowledged: false
+        };
+        setAlerts(prev => [newAlert, ...prev]);
+
+      } else {
+        throw new Error('API request failed');
+      }
+    } catch (err) {
+      // Fallback local matching
+      const match = dataset.find(d => d.shorthand.toLowerCase().includes(text.toLowerCase())) || {
+        shorthand: text,
+        category: 'DAILY_NEEDS',
+        urgency: 'medium',
+        reconstructed: `Could you please assist me with ${text}? I need your help right now.`,
+        baseline_output: `Hello! Regarding ${text}, as an AI model, please consult with your healthcare caregiver.`,
+        baseline_latency_ms: 1480,
+        tinker_latency_ms: 174
+      };
+      setActiveItem(match);
+    } finally {
+      setIsDecoding(false);
+    }
+  };
+
+  // Real TTS Voice Synthesis with Web Speech & ElevenLabs integration
+  const handlePlayVoice = async (sentence) => {
     if (isMuted) return;
 
     if (isSpeaking) {
@@ -68,11 +190,33 @@ export default function Home() {
       return;
     }
 
+    try {
+      // Check if ElevenLabs proxy is available
+      const ttsRes = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: sentence })
+      });
+
+      if (ttsRes.ok && ttsRes.headers.get('content-type')?.includes('audio/mpeg')) {
+        const audioBlob = await ttsRes.blob();
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        
+        setIsSpeaking(true);
+        audio.onended = () => setIsSpeaking(false);
+        audio.onerror = () => setIsSpeaking(false);
+        audio.play();
+        return;
+      }
+    } catch (e) {}
+
+    // Fallback: Web Speech API with calibrated pitch and prosody
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(sentence);
-      utterance.rate = 0.95;
-      utterance.pitch = 1.05;
+      utterance.rate = 0.94;
+      utterance.pitch = 1.02;
 
       utterance.onstart = () => setIsSpeaking(true);
       utterance.onend = () => setIsSpeaking(false);
@@ -80,6 +224,10 @@ export default function Home() {
 
       window.speechSynthesis.speak(utterance);
     }
+  };
+
+  const handleAcknowledgeAlert = (id) => {
+    setAlerts(prev => prev.map(a => a.id === id ? { ...a, acknowledged: true } : a));
   };
 
   const resultPayload = {
@@ -100,7 +248,7 @@ export default function Home() {
         position: 'sticky',
         top: 0,
         zIndex: 50,
-        background: 'rgba(7, 9, 13, 0.85)',
+        background: 'rgba(7, 9, 13, 0.88)',
         backdropFilter: 'blur(24px)',
         borderBottom: '1px solid rgba(0, 245, 155, 0.15)',
         padding: '0 28px',
@@ -125,7 +273,6 @@ export default function Home() {
             boxShadow: '0 0 20px rgba(0, 245, 155, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
             flexShrink: 0
           }}>
-            {/* Cybernetic Equalizer Sound Wave */}
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <rect x="3" y="8" width="2.5" height="8" rx="1.25" fill="#00F59B" />
               <rect x="8.5" y="4" width="2.5" height="16" rx="1.25" fill="#00F59B" />
@@ -133,7 +280,6 @@ export default function Home() {
               <rect x="19.5" y="6" width="2.5" height="12" rx="1.25" fill="#059669" />
               <circle cx="12" cy="12" r="9" stroke="rgba(0, 245, 155, 0.25)" strokeWidth="1.2" strokeDasharray="3 3" />
             </svg>
-            {/* Micro-glow in the center */}
             <div style={{
               position: 'absolute',
               width: '14px',
@@ -213,39 +359,40 @@ export default function Home() {
           <button
             onClick={() => setIsStoryOpen(true)}
             className="btn-zed-ghost"
+            style={{ fontSize: '12px' }}
           >
-            <Heart size={13} fill="#FF2E63" color="#FF2E63" />
+            <Heart size={14} color="#FF6B8B" fill="#FF6B8B" />
             <span>Built for Tariq</span>
           </button>
 
           <button
             onClick={handleEmergencyChime}
+            className="btn-zed"
             style={{
-              background: 'rgba(255, 46, 99, 0.12)',
-              border: '1px solid rgba(255, 46, 99, 0.35)',
-              borderRadius: '10px',
-              padding: '8px 14px',
-              fontSize: '11px',
-              fontWeight: '700',
-              fontFamily: 'var(--font-mono)',
-              color: '#FF2E63',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
+              fontSize: '12px',
+              background: chimeActive ? '#FF2E63' : 'rgba(255, 46, 99, 0.15)',
+              borderColor: chimeActive ? '#FF2E63' : 'rgba(255, 46, 99, 0.4)',
+              color: chimeActive ? '#FFFFFF' : '#FF6B8B',
+              boxShadow: chimeActive ? '0 0 24px rgba(255, 46, 99, 0.6)' : 'none',
+              transform: chimeActive ? 'scale(0.96)' : 'none',
+              transition: 'all 0.15s ease'
             }}
-            title="Emergency Caregiver Chime"
           >
-            <Bell size={13} />
-            <span>Chime</span>
+            <Bell size={14} />
+            <span>Chime Nurse</span>
           </button>
 
           <button
             onClick={() => setIsMuted(!isMuted)}
             className="btn-zed-ghost"
-            style={{ width: '36px', height: '36px', padding: 0, justifyContent: 'center' }}
+            title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
+            style={{ padding: '8px 12px' }}
           >
-            {isMuted ? <VolumeX size={15} color="#FF2E63" /> : <Volume2 size={15} color="var(--zed-green)" />}
+            {isMuted ? (
+              <VolumeX size={15} color="#FF6B8B" />
+            ) : (
+              <Volume2 size={15} color="var(--zed-green)" />
+            )}
           </button>
         </div>
       </header>
@@ -253,7 +400,7 @@ export default function Home() {
       {/* Hero & 3D Centerpiece */}
       <section style={{ position: 'relative', overflow: 'hidden', padding: '30px 24px 10px 24px', maxWidth: '1240px', margin: '0 auto', width: '100%' }}>
         
-        {/* Spline 3D Scene in Zed Green */}
+        {/* Instant-Loading 3D Robot Avatar in Zed Green */}
         <SplineScene isSpeaking={isSpeaking} urgency={activeItem.urgency} />
 
         {/* Crisp, Minimal SSS-Tier Typography */}
@@ -318,14 +465,11 @@ export default function Home() {
 
         {/* 2. Tactile Sound Matrix Console */}
         <div style={{ marginTop: '40px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span className="led-zed" />
-              <h3 style={{ fontSize: '20px', fontWeight: '800', fontFamily: 'var(--font-display)', color: '#FFFFFF', letterSpacing: '-0.02em' }}>
-                Tactile Sound Matrix
-              </h3>
-            </div>
-            <span style={{ fontSize: '11px', color: '#64748B', fontFamily: 'var(--font-mono)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <h2 style={{ fontSize: '20px', fontWeight: '800', fontFamily: 'var(--font-display)', color: '#FFFFFF' }}>
+              Tactile Sound Matrix
+            </h2>
+            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: '#64748B' }}>
               Keyboard Shortcuts [1] - [9] Active
             </span>
           </div>
@@ -335,15 +479,20 @@ export default function Home() {
             onSelect={handleSelect}
             activeShorthand={activeShorthand}
             onCustomSubmit={handleCustomSubmit}
+            isDecoding={isDecoding}
           />
         </div>
 
-        {/* 3. Thinking Machines' Tinker Telemetry Horizon */}
+        {/* 3. Live Bedside Caregiver Feed & Nurse Dispatch */}
+        <CaregiverAlertFeed
+          alerts={alerts}
+          onAcknowledge={handleAcknowledgeAlert}
+        />
+
+        {/* 4. Thinking Machines' Tinker Telemetry Horizon with 25-Case Benchmark Runner */}
         <TinkerHorizon benchmarkData={benchmarkData} />
 
       </section>
-
-
 
       {/* Story Drawer */}
       <StoryDrawer isOpen={isStoryOpen} onClose={() => setIsStoryOpen(false)} />
