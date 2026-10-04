@@ -259,35 +259,74 @@ export default function Home() {
       }}>
         {/* Brand */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          {/* Futuristic Cybernetic Voice Node Mark */}
+          {/* SSS-Tier Neural Bridge Architectural Emblem */}
           <div style={{
             position: 'relative',
-            width: '38px',
-            height: '38px',
-            borderRadius: '11px',
-            background: 'linear-gradient(145deg, #111822 0%, #0A0F15 100%)',
+            width: '42px',
+            height: '42px',
+            borderRadius: '12px',
+            background: 'linear-gradient(145deg, #131B24 0%, #0A0E15 100%)',
             border: '1px solid rgba(0, 245, 155, 0.35)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 20px rgba(0, 245, 155, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
-            flexShrink: 0
+            boxShadow: '0 0 20px rgba(0, 245, 155, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(0, 0, 0, 0.6)',
+            flexShrink: 0,
+            cursor: 'pointer',
+            transition: 'all 0.25s var(--ease-spring)'
           }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="8" width="2.5" height="8" rx="1.25" fill="#00F59B" />
-              <rect x="8.5" y="4" width="2.5" height="16" rx="1.25" fill="#00F59B" />
-              <rect x="14" y="9" width="2.5" height="10" rx="1.25" fill="#34D399" />
-              <rect x="19.5" y="6" width="2.5" height="12" rx="1.25" fill="#059669" />
-              <circle cx="12" cy="12" r="9" stroke="rgba(0, 245, 155, 0.25)" strokeWidth="1.2" strokeDasharray="3 3" />
+            <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bridgeGrad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#00F59B" />
+                  <stop offset="50%" stopColor="#10B981" />
+                  <stop offset="100%" stopColor="#059669" />
+                </linearGradient>
+                <linearGradient id="waveGrad" x1="4" y1="16" x2="28" y2="16" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#10B981" />
+                  <stop offset="50%" stopColor="#00F59B" />
+                  <stop offset="100%" stopColor="#34D399" />
+                </linearGradient>
+              </defs>
+
+              {/* Technical Circular Coordinate Reticle */}
+              <circle cx="16" cy="16" r="13" stroke="rgba(0, 245, 155, 0.22)" strokeWidth="1" strokeDasharray="2 3" />
+
+              {/* Precision Architectural Bridge Arch (The 'A' Frame Arch) */}
+              <path
+                d="M7 24C7 15.5 11 8 16 8C21 8 25 15.5 25 24"
+                stroke="url(#bridgeGrad)"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              />
+
+              {/* Resonant Vocal Formant Waveform (Interlaced Speech Flow) */}
+              <path
+                d="M5 19.5C7.5 19.5 9.5 22 12 22C14 22 14.5 12.5 16 12.5C17.5 12.5 18 22 20 22C22.5 22 24.5 19.5 27 19.5"
+                stroke="url(#waveGrad)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+
+              {/* Glowing Apex Synthesis Jewel */}
+              <circle cx="16" cy="8" r="2.2" fill="#00F59B" />
+              <circle cx="16" cy="8" r="4.2" fill="#00F59B" fillOpacity="0.22" />
+
+              {/* Synaptic Terminal Nodes */}
+              <circle cx="7" cy="24" r="1.5" fill="#10B981" />
+              <circle cx="25" cy="24" r="1.5" fill="#10B981" />
             </svg>
+
+            {/* Ambient Radial Bloom */}
             <div style={{
               position: 'absolute',
-              width: '14px',
-              height: '14px',
+              width: '16px',
+              height: '16px',
               borderRadius: '50%',
               background: '#00F59B',
               filter: 'blur(8px)',
-              opacity: 0.45,
+              opacity: 0.3,
               pointerEvents: 'none'
             }} />
           </div>
