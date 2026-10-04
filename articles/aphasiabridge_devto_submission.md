@@ -61,7 +61,7 @@ Instead of forcing a motor-impaired patient to hunt for tiny letters on a virtua
 3. **ElevenLabs Vocal Restoration:** The translated sentence is voiced using a high-fidelity vocal timbre cloned from Tariq's pre-accident phone videos. Instead of sounding like an automated supermarket scanner, he speaks in his own natural pitch and cadence.
 4. **Caregiver Telemetry Stream:** A live clinical audit log that records timestamps, urgency categories, and latency benchmarks for hospital nurses and visiting speech therapists.
 
-![AphasiaBridge Hero Dashboard](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/hero_hq.png)
+![AphasiaBridge Hero Dashboard](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/hero_hq.png?v=1a5fd4e)
 
 ---
 
@@ -80,7 +80,7 @@ To let judges and community members test the system without waiting for hospital
 2. **Tactile AAC Sound Matrix:** Test numeric keycaps [1] through [9] with simulated keyboard haptics and instant clinical category filters.
 3. **Caregiver Alert Stream:** Trigger an emergency bedside chime (880Hz to 587Hz) and inspect incoming clinical alerts with urgency badges.
 
-![Live Decoding Race Benchmark](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/live_race_hq.png)
+![Live Decoding Race Benchmark](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/live_race_hq.png?v=1a5fd4e)
 
 ---
 
@@ -189,7 +189,7 @@ client.save_state(adapter_id, "checkpoints/aphasiabridge_tinker_v2")
 
 Across 5 training epochs, our training loss dropped cleanly from **2.45 down to 0.44**. The model learned to immediately drop all chatbot conversational framing and focus 100% of its probability mass on the patient's immediate first-person request.
 
-![Empirical Telemetry Curve](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/telemetry_curve_hq.png)
+![Empirical Telemetry Curve](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/telemetry_curve_hq.png?v=1a5fd4e)
 
 ---
 
@@ -219,13 +219,13 @@ Assistive technology often suffers from clumsy UI designs that look like hospita
 
 The sound matrix provides physical mechanical-style keycaps mapped to numeric keys [1] through [9]. When Tariq or his nurse taps a key, a subtle audio click confirms the input, and the shorthand is instantly reconstructed.
 
-![Tactile Sound Matrix](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/tactile_matrix_hq.png)
+![Tactile Sound Matrix](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/tactile_matrix_hq.png?v=1a5fd4e)
 
 ### 2. Clinical Caregiver Alert Stream
 
 For nurses working 12-hour night shifts, reading a small tablet screen from across the room is impractical. AphasiaBridge features a live caregiver telemetry feed that color-codes incoming communications by urgency, sounds a distinct two-tone clinical chime (880Hz to 587Hz), and provides an instant acknowledge button.
 
-![Caregiver Alert Feed](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/caregiver_feed_hq.png)
+![Caregiver Alert Feed](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/caregiver_feed_hq.png?v=1a5fd4e)
 
 ---
 
