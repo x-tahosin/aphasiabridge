@@ -4,40 +4,37 @@ import React, { useEffect, useRef, useState } from 'react';
 
 export default function SplineScene({ isSpeaking, urgency }) {
   const canvasRef = useRef(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const splineContainerRef = useRef(null);
+  const [splineLoaded, setSplineLoaded] = useState(false);
+  const mousePos = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
 
-  // Smooth mouse parallax listener
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * 2;
-      const y = (e.clientY / innerHeight - 0.5) * 2;
-      setTilt({ x, y });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // High-performance 60-120fps Canvas Ambient Resonance Field
+  // High-performance Canvas Ambient Resonance Field
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
 
-    let width = (canvas.width = canvas.offsetWidth * 1.5);
-    let height = (canvas.height = canvas.offsetHeight * 1.5);
+    let width = (canvas.width = canvas.offsetWidth);
+    let height = (canvas.height = canvas.offsetHeight);
 
     const handleResize = () => {
       if (!canvas) return;
-      width = canvas.width = canvas.offsetWidth * 1.5;
-      height = canvas.height = canvas.offsetHeight * 1.5;
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+    };
+
+    const handleMouseMove = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mousePos.current.targetX = e.clientX - rect.left - width / 2;
+      mousePos.current.targetY = e.clientY - rect.top - height / 2;
     };
 
     window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
 
-    const numParticles = 46;
+    // Particle nodes for neural speech mesh
+    const numParticles = 54;
     const particles = [];
     const isUrgent = urgency === 'critical' || urgency === 'high';
 
@@ -45,10 +42,10 @@ export default function SplineScene({ isSpeaking, urgency }) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        radius: Math.random() * 2 + 1,
-        alpha: Math.random() * 0.5 + 0.2
+        vx: (Math.random() - 0.5) * 0.7,
+        vy: (Math.random() - 0.5) * 0.7,
+        radius: Math.random() * 2 + 1.2,
+        alpha: Math.random() * 0.6 + 0.2
       });
     }
 
@@ -56,71 +53,76 @@ export default function SplineScene({ isSpeaking, urgency }) {
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
-      time += isSpeaking ? 0.04 : 0.015;
+      time += isSpeaking ? 0.045 : 0.016;
 
-      const centerX = width / 2;
-      const centerY = height / 2 - 20;
-      const baseRadius = Math.min(width, height) * 0.26;
+      // Smooth mouse follow
+      mousePos.current.x += (mousePos.current.targetX - mousePos.current.x) * 0.05;
+      mousePos.current.y += (mousePos.current.targetY - mousePos.current.y) * 0.05;
+
+      const centerX = width / 2 + mousePos.current.x * 0.15;
+      const centerY = height / 2 + mousePos.current.y * 0.15;
+      const baseRadius = Math.min(width, height) * 0.24;
       const pulseMultiplier = isSpeaking 
-        ? 1 + Math.sin(time * 7) * 0.12 
-        : 1 + Math.sin(time * 2) * 0.03;
+        ? 1 + Math.sin(time * 8) * 0.14 
+        : 1 + Math.sin(time * 2.5) * 0.04;
       const radius = baseRadius * pulseMultiplier;
 
-      // Outer glow in Zed Green
-      const glowGrad = ctx.createRadialGradient(centerX, centerY, radius * 0.2, centerX, centerY, radius * 1.9);
+      // Outer glow gradient in Zed Green
+      const glowGrad = ctx.createRadialGradient(centerX, centerY, radius * 0.1, centerX, centerY, radius * 2.0);
       if (isUrgent) {
-        glowGrad.addColorStop(0, 'rgba(255, 46, 99, 0.35)');
-        glowGrad.addColorStop(0.5, 'rgba(255, 46, 99, 0.08)');
+        glowGrad.addColorStop(0, 'rgba(255, 46, 99, 0.4)');
+        glowGrad.addColorStop(0.5, 'rgba(255, 46, 99, 0.1)');
         glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       } else {
-        glowGrad.addColorStop(0, 'rgba(0, 245, 155, 0.3)');
-        glowGrad.addColorStop(0.45, 'rgba(16, 185, 129, 0.08)');
+        glowGrad.addColorStop(0, 'rgba(0, 245, 155, 0.35)');
+        glowGrad.addColorStop(0.45, 'rgba(16, 185, 129, 0.12)');
         glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       }
 
       ctx.fillStyle = glowGrad;
       ctx.beginPath();
-      ctx.arc(centerX, centerY, radius * 1.9, 0, Math.PI * 2);
+      ctx.arc(centerX, centerY, radius * 2.0, 0, Math.PI * 2);
       ctx.fill();
 
-      // Holographic Orbit Rings in Zed Green
-      for (let ring = 1; ring <= 4; ring++) {
+      // Core 3D Mesh Wireframe Orbit Rings in Zed Green
+      for (let ring = 1; ring <= 5; ring++) {
         ctx.beginPath();
-        const ringR = (radius / 4) * ring;
-        ctx.strokeStyle = ring === 4 
-          ? (isUrgent ? 'rgba(255, 46, 99, 0.6)' : 'rgba(0, 245, 155, 0.75)')
-          : (ring === 3 ? 'rgba(0, 245, 155, 0.25)' : 'rgba(255, 255, 255, 0.05)');
-        ctx.lineWidth = ring === 4 ? 1.5 : 1;
+        const ringR = (radius / 5) * ring;
+        ctx.strokeStyle = ring === 5 
+          ? (isUrgent ? 'rgba(255, 46, 99, 0.7)' : 'rgba(0, 245, 155, 0.85)')
+          : (ring === 4 ? 'rgba(0, 245, 155, 0.35)' : 'rgba(255, 255, 255, 0.06)');
+        ctx.lineWidth = ring === 5 ? 2 : 1;
         
-        const wobble = Math.sin(time + ring * 1.2) * 6;
-        ctx.ellipse(centerX, centerY, ringR + wobble, ringR * 0.65, time * 0.25 + ring * 0.7, 0, Math.PI * 2);
+        const wobble = Math.sin(time + ring * 1.2) * 8;
+        ctx.ellipse(centerX, centerY, ringR + wobble, ringR * 0.65, time * 0.35 + ring * 0.8, 0, Math.PI * 2);
         ctx.stroke();
       }
 
-      // Synaptic particles
-      ctx.lineWidth = 0.5;
+      // Interconnected synaptic neural particles
+      ctx.lineWidth = 0.6;
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        p.x += p.vx * (isSpeaking ? 2 : 1);
-        p.y += p.vy * (isSpeaking ? 2 : 1);
+        p.x += p.vx * (isSpeaking ? 2.2 : 1);
+        p.y += p.vy * (isSpeaking ? 2.2 : 1);
 
         if (p.x < 0) p.x = width;
         if (p.x > width) p.x = 0;
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        ctx.fillStyle = isUrgent ? 'rgba(255, 46, 99, 0.85)' : 'rgba(0, 245, 155, 0.85)';
+        ctx.fillStyle = isUrgent ? 'rgba(255, 46, 99, 0.9)' : 'rgba(0, 245, 155, 0.85)';
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
 
+        // Connect nearby nodes with Zed Green synaptic lines
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist < 90) {
+          if (dist < 95) {
             ctx.strokeStyle = isUrgent
-              ? `rgba(255, 46, 99, ${0.18 * (1 - dist / 90)})`
-              : `rgba(0, 245, 155, ${0.2 * (1 - dist / 90)})`;
+              ? `rgba(255, 46, 99, ${0.2 * (1 - dist / 95)})`
+              : `rgba(0, 245, 155, ${0.22 * (1 - dist / 95)})`;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
@@ -137,12 +139,64 @@ export default function SplineScene({ isSpeaking, urgency }) {
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [isSpeaking, urgency]);
 
+  // Load interactive Spline robot asynchronously with clean single-canvas mount
+  useEffect(() => {
+    let appInstance = null;
+    let isCancelled = false;
+
+    async function loadSpline() {
+      try {
+        const container = splineContainerRef.current;
+        if (!container) return;
+
+        // Clean any old canvas
+        const existing = container.querySelector('.spline-runtime-canvas');
+        if (existing) existing.remove();
+
+        const rect = container.getBoundingClientRect();
+        const width = rect.width || 800;
+        const height = rect.height || 380;
+
+        const { Application } = await import('@splinetool/runtime');
+        const splineCanvas = document.createElement('canvas');
+        splineCanvas.className = 'spline-runtime-canvas';
+        splineCanvas.width = width;
+        splineCanvas.height = height;
+        splineCanvas.style.width = '100%';
+        splineCanvas.style.height = '100%';
+        splineCanvas.style.position = 'absolute';
+        splineCanvas.style.inset = '0';
+        splineCanvas.style.pointerEvents = 'none';
+
+        container.appendChild(splineCanvas);
+        const app = new Application(splineCanvas);
+        await app.load('https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode');
+        if (!isCancelled) {
+          appInstance = app;
+          setSplineLoaded(true);
+        }
+      } catch (err) {
+        setSplineLoaded(false);
+      }
+    }
+
+    loadSpline();
+
+    return () => {
+      isCancelled = true;
+      if (appInstance && typeof appInstance.dispose === 'function') {
+        appInstance.dispose();
+      }
+    };
+  }, []);
+
   return (
-    <div className="spline-wrapper" style={{ perspective: '1200px' }}>
-      {/* Background Holographic Sound Canvas */}
+    <div className="spline-wrapper" ref={splineContainerRef}>
+      {/* Interactive 3D Neural Sound Canvas in Zed Green */}
       <canvas
         ref={canvasRef}
         style={{
@@ -150,63 +204,11 @@ export default function SplineScene({ isSpeaking, urgency }) {
           height: '100%',
           position: 'absolute',
           inset: 0,
+          opacity: splineLoaded ? 0.35 : 1,
+          transition: 'opacity 0.6s ease',
           pointerEvents: 'none',
         }}
       />
-
-      {/* 3D Cybernetic Robot Avatar with Smooth Hardware Parallax */}
-      <div
-        style={{
-          position: 'relative',
-          width: '310px',
-          height: '310px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transform: `rotateY(${tilt.x * 14}deg) rotateX(${-tilt.y * 10}deg) translateZ(20px)`,
-          transition: 'transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1)',
-          pointerEvents: 'none',
-          userSelect: 'none',
-          zIndex: 2
-        }}
-      >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          maskImage: 'radial-gradient(ellipse at 50% 50%, black 60%, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at 50% 50%, black 60%, transparent 80%)'
-        }}>
-          <img
-            src="/images/cute_robot.jpg"
-            alt="Tariq Friendly Companion Robot"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              mixBlendMode: 'screen',
-              filter: isSpeaking 
-                ? 'drop-shadow(0 0 35px rgba(0, 245, 155, 0.7)) contrast(1.15) brightness(1.15)' 
-                : 'drop-shadow(0 0 22px rgba(0, 245, 155, 0.35)) contrast(1.1)',
-              transition: 'filter 0.3s ease'
-            }}
-          />
-        </div>
-
-        {/* Ambient Focal Glow in Center */}
-        <div style={{
-          position: 'absolute',
-          width: '180px',
-          height: '180px',
-          borderRadius: '50%',
-          background: urgency === 'critical' ? 'rgba(255, 46, 99, 0.25)' : 'rgba(0, 245, 155, 0.25)',
-          filter: 'blur(35px)',
-          zIndex: -1,
-          animation: 'zedPulse 3s infinite'
-        }} />
-      </div>
     </div>
   );
 }

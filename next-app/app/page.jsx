@@ -427,33 +427,20 @@ export default function Home() {
             fontWeight: '900',
             fontFamily: 'var(--font-display)',
             letterSpacing: '-0.04em',
-            background: 'linear-gradient(135deg, #FFFFFF 40%, #00F59B 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
             lineHeight: '1.08',
             marginBottom: '16px'
           }}>
-            Restoring Tariq's Voice.
+            <span style={{ color: '#FFFFFF' }}>Restoring Tariq's </span>
+            <span style={{
+              background: 'linear-gradient(135deg, #00F59B 0%, #34D399 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>Voice.</span>
           </h1>
 
-          <p style={{ fontSize: '16px', color: '#94A3B8', lineHeight: '1.6', fontWeight: '400', maxWidth: '620px', margin: '0 auto 20px auto' }}>
+          <p style={{ fontSize: '16px', color: '#94A3B8', lineHeight: '1.6', fontWeight: '400', maxWidth: '620px', margin: '0 auto' }}>
             Transforming fragmented aphasic shorthand into instant first-person dignity in <strong style={{ color: 'var(--zed-green)' }}>174 milliseconds</strong>.
           </p>
-
-          {/* Quick Telemetry Chips */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: '#64748B' }}>
-              LATENCY: <strong style={{ color: 'var(--zed-green)' }}>174ms (8.4x faster)</strong>
-            </span>
-            <span style={{ color: 'rgba(255,255,255,0.15)' }}>&bull;</span>
-            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: '#64748B' }}>
-              INTENT: <strong style={{ color: 'var(--zed-green)' }}>98.4% (+54.8%)</strong>
-            </span>
-            <span style={{ color: 'rgba(255,255,255,0.15)' }}>&bull;</span>
-            <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: '#64748B' }}>
-              BOILERPLATE: <strong style={{ color: 'var(--zed-green)' }}>0.0%</strong>
-            </span>
-          </div>
         </div>
 
         {/* 1. Real-Time Latency Race Horizon */}
