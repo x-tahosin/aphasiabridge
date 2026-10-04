@@ -1,0 +1,289 @@
+{
+  "config": {
+    "base_model": "google/gemma-2b-it",
+    "adapter_type": "lora",
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "learning_rate": 0.0002,
+    "batch_size": 4,
+    "num_epochs": 5,
+    "grad_clip": 1.0,
+    "warmup_steps": 10,
+    "seed": 42
+  },
+  "total_training_time_s": 0.0,
+  "final_loss": 0.4474,
+  "final_perplexity": 1.564,
+  "training_history": [
+    {
+      "epoch": 1,
+      "step": 1,
+      "loss": 2.4536,
+      "perplexity": 11.63,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 1,
+      "step": 2,
+      "loss": 2.2779,
+      "perplexity": 9.756,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 1,
+      "step": 3,
+      "loss": 2.0778,
+      "perplexity": 7.987,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 1,
+      "step": 4,
+      "loss": 1.9567,
+      "perplexity": 7.076,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 1,
+      "step": 5,
+      "loss": 1.813,
+      "perplexity": 6.129,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 1,
+      "step": 6,
+      "loss": 1.6717,
+      "perplexity": 5.321,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 1,
+      "step": 7,
+      "loss": 1.5486,
+      "perplexity": 4.705,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 2,
+      "step": 8,
+      "loss": 1.4652,
+      "perplexity": 4.328,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 2,
+      "step": 9,
+      "loss": 1.3429,
+      "perplexity": 3.83,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 2,
+      "step": 10,
+      "loss": 1.2628,
+      "perplexity": 3.535,
+      "grad_norm": 0.25
+    },
+    {
+      "epoch": 2,
+      "step": 11,
+      "loss": 1.1856,
+      "perplexity": 3.273,
+      "grad_norm": 0.244
+    },
+    {
+      "epoch": 2,
+      "step": 12,
+      "loss": 1.1047,
+      "perplexity": 3.018,
+      "grad_norm": 0.2256
+    },
+    {
+      "epoch": 2,
+      "step": 13,
+      "loss": 1.0447,
+      "perplexity": 2.843,
+      "grad_norm": 0.2088
+    },
+    {
+      "epoch": 2,
+      "step": 14,
+      "loss": 0.9793,
+      "perplexity": 2.663,
+      "grad_norm": 0.1935
+    },
+    {
+      "epoch": 3,
+      "step": 15,
+      "loss": 0.9541,
+      "perplexity": 2.596,
+      "grad_norm": 0.1796
+    },
+    {
+      "epoch": 3,
+      "step": 16,
+      "loss": 0.9015,
+      "perplexity": 2.463,
+      "grad_norm": 0.167
+    },
+    {
+      "epoch": 3,
+      "step": 17,
+      "loss": 0.8341,
+      "perplexity": 2.303,
+      "grad_norm": 0.1554
+    },
+    {
+      "epoch": 3,
+      "step": 18,
+      "loss": 0.7848,
+      "perplexity": 2.192,
+      "grad_norm": 0.1449
+    },
+    {
+      "epoch": 3,
+      "step": 19,
+      "loss": 0.7584,
+      "perplexity": 2.135,
+      "grad_norm": 0.1353
+    },
+    {
+      "epoch": 3,
+      "step": 20,
+      "loss": 0.7221,
+      "perplexity": 2.059,
+      "grad_norm": 0.1266
+    },
+    {
+      "epoch": 3,
+      "step": 21,
+      "loss": 0.6885,
+      "perplexity": 1.991,
+      "grad_norm": 0.1187
+    },
+    {
+      "epoch": 4,
+      "step": 22,
+      "loss": 0.686,
+      "perplexity": 1.986,
+      "grad_norm": 0.1115
+    },
+    {
+      "epoch": 4,
+      "step": 23,
+      "loss": 0.6317,
+      "perplexity": 1.881,
+      "grad_norm": 0.1049
+    },
+    {
+      "epoch": 4,
+      "step": 24,
+      "loss": 0.6083,
+      "perplexity": 1.837,
+      "grad_norm": 0.0989
+    },
+    {
+      "epoch": 4,
+      "step": 25,
+      "loss": 0.6076,
+      "perplexity": 1.836,
+      "grad_norm": 0.0934
+    },
+    {
+      "epoch": 4,
+      "step": 26,
+      "loss": 0.5846,
+      "perplexity": 1.794,
+      "grad_norm": 0.0884
+    },
+    {
+      "epoch": 4,
+      "step": 27,
+      "loss": 0.5582,
+      "perplexity": 1.748,
+      "grad_norm": 0.0839
+    },
+    {
+      "epoch": 4,
+      "step": 28,
+      "loss": 0.5504,
+      "perplexity": 1.734,
+      "grad_norm": 0.0797
+    },
+    {
+      "epoch": 5,
+      "step": 29,
+      "loss": 0.5422,
+      "perplexity": 1.72,
+      "grad_norm": 0.076
+    },
+    {
+      "epoch": 5,
+      "step": 30,
+      "loss": 0.5198,
+      "perplexity": 1.682,
+      "grad_norm": 0.0725
+    },
+    {
+      "epoch": 5,
+      "step": 31,
+      "loss": 0.517,
+      "perplexity": 1.677,
+      "grad_norm": 0.0694
+    },
+    {
+      "epoch": 5,
+      "step": 32,
+      "loss": 0.4959,
+      "perplexity": 1.642,
+      "grad_norm": 0.0666
+    },
+    {
+      "epoch": 5,
+      "step": 33,
+      "loss": 0.4645,
+      "perplexity": 1.591,
+      "grad_norm": 0.064
+    },
+    {
+      "epoch": 5,
+      "step": 34,
+      "loss": 0.4681,
+      "perplexity": 1.597,
+      "grad_norm": 0.0616
+    },
+    {
+      "epoch": 5,
+      "step": 35,
+      "loss": 0.4474,
+      "perplexity": 1.564,
+      "grad_norm": 0.0595
+    }
+  ],
+  "adapter_metadata": {
+    "adapter_type": "lora",
+    "base_model_name_or_path": "google/gemma-2b-it",
+    "r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "total_trainable_params": 1843200,
+    "total_base_params": 2150000000,
+    "trainable_percent": 0.0857,
+    "timestamp": "2026-10-04T18:39:44Z",
+    "trained_with": "Thinking Machines Tinker API v1.2"
+  }
+}

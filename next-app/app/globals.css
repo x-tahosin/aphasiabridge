@@ -1,0 +1,237 @@
+/* =========================================================================
+   AphasiaBridge - Luxury Assistive Instrument & Production Design System
+   Pure Vanilla CSS • Handcrafted Luxury Aesthetics • Minimalist Hi-Fi
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg-deep: #030508;
+  --bg-surface: #070B12;
+  --bg-glass: rgba(11, 17, 28, 0.75);
+  --bg-glass-active: rgba(18, 28, 46, 0.9);
+  
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-focus: rgba(0, 242, 254, 0.5);
+  --border-emerald: rgba(16, 185, 129, 0.4);
+  
+  --cyan-core: #00F2FE;
+  --cyan-glow: rgba(0, 242, 254, 0.25);
+  --emerald-tinker: #10B981;
+  --emerald-glow: rgba(16, 185, 129, 0.25);
+  --coral-urgent: #FF3366;
+  --coral-glow: rgba(255, 51, 102, 0.3);
+  --amber-baseline: #F59E0B;
+  
+  --font-display: 'Outfit', -apple-system, sans-serif;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: #E2E8F0;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Ambient Radial Mesh */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(0, 242, 254, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 90% 70%, rgba(255, 51, 102, 0.04) 0%, transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtly Textured Subtle Grid */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Luxury Glass Surface */
+.glass-surface {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: 
+    0 30px 60px -15px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.3s var(--ease-spring);
+}
+
+.glass-surface:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Tactile 3D Physical Keycaps */
+.tactile-key {
+  background: linear-gradient(180deg, #131B2B 0%, #0B101D 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
+  padding: 18px 20px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.15s var(--ease-spring);
+  box-shadow: 
+    0 10px 20px -5px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.tactile-key::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+}
+
+.tactile-key:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 242, 254, 0.4);
+  box-shadow: 
+    0 15px 30px -5px var(--cyan-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.tactile-key:active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+.tactile-key-urgent {
+  background: linear-gradient(180deg, #2D111A 0%, #170A0F 100%);
+  border-color: rgba(255, 51, 102, 0.35);
+}
+
+.tactile-key-urgent:hover {
+  border-color: var(--coral-urgent);
+  box-shadow: 0 15px 30px -5px var(--coral-glow);
+}
+
+/* Glowing Minimal Badges */
+.pill-tinker {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34D399;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+}
+
+.pill-baseline {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #FBBF24;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+/* Live Audio Frequency Visualizer */
+.audio-spectrum-canvas {
+  width: 100%;
+  height: 48px;
+  display: block;
+}
+
+/* Animated Horizon Gauge Bar */
+.horizon-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+}
+
+.horizon-bar-tinker {
+  height: 100%;
+  background: linear-gradient(90deg, #00F2FE, #10B981);
+  border-radius: 9999px;
+  box-shadow: 0 0 15px var(--cyan-glow);
+  transition: width 0.35s var(--ease-spring);
+}
+
+.horizon-bar-baseline {
+  height: 100%;
+  background: #F59E0B;
+  border-radius: 9999px;
+  opacity: 0.6;
+  transition: width 1.2s ease-out;
+}
+
+/* Spline 3D Container */
+.spline-wrapper {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pulse Dot */
+.led-emerald {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--emerald-tinker);
+  box-shadow: 0 0 10px var(--emerald-tinker);
+  animation: ledPulse 2s infinite;
+}
+
+@keyframes ledPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: #1A2234;
+  border-radius: 3px;
+}

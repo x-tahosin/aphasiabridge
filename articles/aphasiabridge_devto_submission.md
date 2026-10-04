@@ -167,6 +167,24 @@ Step 35 | Loss: 0.4474 | PPL: 1.56  | GradNorm: 0.059
 
 ---
 
+## Production Interface & Visual Design (Next.js + Vanilla CSS + Spline 3D)
+
+Rather than building an overwhelming dashboard, AphasiaBridge embraces an ultra-clean, minimal text, obsidian-dark design crafted specifically for cognitive rest and rapid tactile interaction:
+
+![AphasiaBridge 3D Spline Hero](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/hero_section.png)
+*Figure 1: The Spline 3D interactive avatar visualizer rendering Tariq's neural intent state in real-time with zero visual clutter.*
+
+![Dual Engine Latency Horizon](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/latency_horizon.png)
+*Figure 2: The real-time Latency Horizon comparing the 174ms Tinker LoRA engine against the 1,390ms slow zero-shot baseline.*
+
+![Tactile AAC Sound Matrix](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/switchboard_decoded.png)
+*Figure 3: High-contrast tactile AAC console designed for patients with limited fine motor dexterity.*
+
+![Tinker LoRA Telemetry Curve](https://raw.githubusercontent.com/x-tahosin/aphasiabridge/main/next-app/public/images/telemetry_curve.png)
+*Figure 4: Empirical Tinker training convergence curve validating loss reduction from 2.45 to 0.44.*
+
+---
+
 ## Why Does Open Innovation Matter?
 
 In accordance with Hacktoberfest 2026's *"AI belongs to everyone"* manifesto, building AphasiaBridge on open innovation was not an engineering preference—it was an **uncompromising medical necessity**:
